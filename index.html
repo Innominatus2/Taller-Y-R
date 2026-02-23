@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taller de reparaciones Y&R</title>
+  <meta name="description" content="Taller Y & R en Sevilla. Especialistas en reparación y mantenimiento de patines. Reserva tu cita por WhatsApp.">
+  <link rel="icon" href="Y & R .jpeg" type="image/jpeg" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #f2f2f2;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #1c1c1c;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      color: #aaa;
+      margin-top: 0.5rem;
+    }
+
+    .btn-principal {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      background: #00bfff;
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: 0.3s ease;
+    }
+
+    .btn-principal:hover {
+      background: #009acd;
+      transform: translateY(-3px);
+    }
+
+    section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      border-left: 4px solid #00bfff;
+      padding-left: 10px;
+    }
+
+    .servicios ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .servicios li {
+      background: #1a1a1a;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .precio-card {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 5px;
+      margin: 10px 0;
+      border-left: 4px solid #00bfff;
+    }
+
+    .precio-card h3 {
+      margin-top: 0;
+      color: #00bfff;
+    }
+
+    .precio {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00bfff;
+    }
+
+    .info-box {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #1c1c1c;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+    }
+    .productos-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+     gap: 20px;
+     margin-top: 20px;
+}
+
+.producto-card {
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+}
+
+.producto-card img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.producto-card h3 {
+  margin: 10px 0 5px 0;
+  color: #00bfff;
+}
+
+.producto-precio {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Taller Y & R</h1>
+  <p>Reparación Profesional de Patines en Sevilla</p>
+  <a href="https://wa.me/640846390?text=Hola%20quiero%20reservar%20una%20cita%20para%20reparar%20mis%20patines" 
+     target="_blank" class="btn-principal">
+     Reservar cita por WhatsApp
+  </a>
+</header>
+
+<section class="servicios">
+  <h2>Servicios</h2>
+  <ul>
+    <li>Mantenimiento del patin</li>
+    <li>⚙️ Ajuste de rodamientos</li>
+    <li>🛠 Reparación de frenos</li>
+    <li>✨ Limpieza y mantenimiento completo</li>
+  </ul>
+</section>
+
+<section class="precios">
+  <h2>Lista de Precios</h2>
+
+  <div class="precio-card">
+    <h3>Mantenimiento</h3>
+    <p class="precio">Desde 5€</p> 
+  </div>
+
+  <div class="precio-card">
+    <h3>(Desconocido)</h3>
+    <p class="precio">Desde €</p>
+  </div>
+
+  <div class="precio-card">
+    <h3>(Desconocido)</h3>
+    <p class="precio">Desde €</p>
+  </div>
+
+  <div class="precio-card">
+    <h3>(Desconocido)</h3>
+    <p class="precio">Desde €</p>
+  </div>
+
+  <p style="margin-top:20px; color:#aaa;">
+    El precio final puede variar según el estado del patín.
+  </p>
+</section>
+
+<section>
+  <h2>Ubicación</h2>
+  <div class="info-box">
+    Calle Madreselva, 10, Bajo derecha, 41008 <br>
+    Sevilla, España
+  </div>
+</section>
+
+<section>
+  <h2>Horario</h2>
+  <div class="info-box">
+    Lunes: 9:00 – 14:00<br>
+    Martes: 9:00 – 14:00, 17:00 – 21:00<br>
+    Miércoles: 9:00 – 14:00, 17:00 – 21:00<br>
+    Jueves: 9:00 – 14:00, 17:00 – 21:00<br>
+    Viernes: 9:00 – 14:00, 17:00 – 21:00<br>
+    Sábado: 9:00 – 14:00, 17:00 – 21:00 (Día de Andalucía) <br>
+    Domingo: Cerrado
+
+
+  </div>
+</section>
+
+  <section>
+  <h2>Productos en Venta</h2>
+
+  <div class="productos-grid">
+
+    <div class="producto-card">
+      <img src="img/neumatico1.png" alt="Neumático 1">
+      <h3>TubelessCityroad</h3>
+      <p class="producto-precio">100,000,000€</p>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%201" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <div class="producto-card">
+      <img src="img/neumatico2.png" alt="Neumático 2">
+      <h3>Chaoyang</h3>
+      <p class="producto-precio">100,000,000€</p>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%202" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <!-- Repite para las 11 fotos -->
+
+  </div>
+</section>
+
+  </div>
+</section>
+
+<section>
+  <h2>¡Tu opinión cuenta!</h2>
+  <p>
+    Si quedaste contento con nuestro servicio, déjanos una reseña en Google Maps. 
+    Nos ayuda a mejorar y a que más patinadores conozcan Taller Y & R.
+  </p>
+  <a href=https://maps.app.goo.gl/s8thZWRv2MPniStQ8 target="_blank" class="btn-principal">
+    Dejar reseña en Google
+  </a>
+</div>
+</section>
+
+<section>
+  <h2>Síguenos en Redes</h2>
+  <div class="info-box">
+    <p>Mira nuestras reparaciones y tips:</p>
+    <a href="https://www.tiktok.com/@chiriaraikol" target="_blank" class="btn-principal">
+      Seguir en TikTok
+    </a>
+    <a href="https://www.instagram.com/raikolcordova?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="btn-principal" style="margin-left:10px;">
+      Seguir en Instagram
+    </a>
+  </div>
+</section>
+
+<footer>
+  Taller Y & R © 2026 | Reparación de Patines en Sevilla
+</footer>
+
+</body>
+</html>
