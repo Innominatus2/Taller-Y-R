@@ -111,18 +111,36 @@
       }
     }
     .productos-grid {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-     gap: 20px;
-     margin-top: 20px;
+  display: flex; /* fila horizontal */
+  gap: 20px;
+  overflow-x: auto; /* permite scroll horizontal */
+  padding-bottom: 10px; /* un poquito de espacio abajo */
+  scroll-behavior: smooth; /* scroll suave */
 }
+
+.productos-grid::-webkit-scrollbar {
+  height: 8px; /* alto de la barra de scroll */
+}
+
+.productos-grid::-webkit-scrollbar-thumb {
+  background: #00bfff; /* color de la barra */
+  border-radius: 4px;
+}
+
+.productos-grid::-webkit-scrollbar-track {
+  background: #1a1a1a; /* fondo de la barra */
+  border-radius: 4px;
+}
+  
 
 .producto-card {
   background: #1a1a1a;
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
+  flex: 0 0 220px; /* ancho fijo para que no se achique demasiado */
   transition: 0.3s ease;
+
 }
 
 .producto-card:hover {
@@ -164,7 +182,7 @@
 <header>
   <h1>Taller Y & R</h1>
   <p>Reparación Profesional de Patines en Sevilla</p>
-  <a href="https://wa.me/640846390?text=Hola%20quiero%20reservar%20una%20cita%20para%20reparar%20mis%20patines" 
+  <a href="https://wa.me/640846390?text=Hola%20quiero%20reservar%20una%20cita" 
      target="_blank" class="btn-principal">
      Reservar cita por WhatsApp
   </a>
@@ -173,10 +191,10 @@
 <section class="servicios">
   <h2>Servicios</h2>
   <ul>
-    <li>Mantenimiento del patin</li>
-    <li>⚙️ Ajuste de rodamientos</li>
-    <li>🛠 Reparación de frenos</li>
-    <li>✨ Limpieza y mantenimiento completo</li>
+    <li>Mantenimiento</li>
+    <li>pinchazo</li>
+    <li>cambio de neumatico</li>
+    <li>reparacion de bateria</li>
   </ul>
 </section>
 
@@ -185,22 +203,22 @@
 
   <div class="precio-card">
     <h3>Mantenimiento</h3>
-    <p class="precio">Desde 5€</p> 
+    <p class="precio">5€</p> 
   </div>
 
   <div class="precio-card">
-    <h3>(Desconocido)</h3>
-    <p class="precio">Desde €</p>
+    <h3>Pinchazo</h3>
+    <p class="precio">20€</p>
   </div>
 
   <div class="precio-card">
-    <h3>(Desconocido)</h3>
-    <p class="precio">Desde €</p>
+    <h3>Cambio de neumático</h3>
+    <p class="precio">Preguntar en WhatsApp</p>
   </div>
 
   <div class="precio-card">
-    <h3>(Desconocido)</h3>
-    <p class="precio">Desde €</p>
+    <h3>Reparación de batería</h3>
+    <p class="precio">Preguntar en WhatsApp</p>
   </div>
 
   <p style="margin-top:20px; color:#aaa;">
@@ -219,7 +237,7 @@
 <section>
   <h2>Horario</h2>
   <div class="info-box">
-    Lunes: 9:00 – 14:00<br>
+    Lunes: 9:00 – 14:00, 17:00 – 21:00<br>
     Martes: 9:00 – 14:00, 17:00 – 21:00<br>
     Miércoles: 9:00 – 14:00, 17:00 – 21:00<br>
     Jueves: 9:00 – 14:00, 17:00 – 21:00<br>
@@ -228,36 +246,105 @@
     Domingo: Cerrado
 
 
-  </div>
+
 </section>
 
-  <section>
+<section>
   <h2>Productos en Venta</h2>
 
   <div class="productos-grid">
 
     <div class="producto-card">
       <img src="img/neumatico1.png" alt="Neumático 1">
-      <h3>TubelessCityroad</h3>
-      <p class="producto-precio">100,000,000€</p>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%201" target="_blank" class="btn-principal">
+      <h3>Tubeless Cityroad 60/70-6,5</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Tubeless%20Cityroad60/70-6,5" target="_blank" class="btn-principal">
         Consultar
       </a>
     </div>
 
     <div class="producto-card">
       <img src="img/neumatico2.png" alt="Neumático 2">
-      <h3>Chaoyang</h3>
-      <p class="producto-precio">100,000,000€</p>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%202" target="_blank" class="btn-principal">
+      <h3>Tubeless Cityroad 10*2,70 6,5(255x70) </h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2010*2,70%206,5(255x70)%20Tubeless%20Cityroad" target="_blank" class="btn-principal">
         Consultar
       </a>
     </div>
 
-    <!-- Repite para las 11 fotos -->
+    <div class="producto-card">
+      <img src="img/neumatico3.png" alt="Neumático 3">
+      <h3>Neumático 3</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%203" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <div class="producto-card">
+      <img src="img/neumatico4.png" alt="Neumático 4">
+      <h3>Neumático 4</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%204" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <div class="producto-card">
+      <img src="img/neumatico5.png" alt="Neumático 5">
+      <h3>Neumático 5</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%205" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <div class="producto-card">
+      <img src="img/neumatico6.png" alt="Neumático 6">
+      <h3>Neumático 6</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%206" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <div class="producto-card">
+      <img src="img/neumatico7.png" alt="Neumático 7">
+      <h3>Neumático 7</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%207" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <div class="producto-card">
+      <img src="img/neumatico8.png" alt="Neumático 8">
+      <h3>Neumático 8</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%208" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <div class="producto-card">
+      <img src="img/neumatico9.png" alt="Neumático 9">
+      <h3>Neumático 9</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%209" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <div class="producto-card">
+      <img src="img/neumatico10.png" alt="Neumático 10">
+      <h3>Neumático 10</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2010" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
+
+    <div class="producto-card">
+      <img src="img/neumatico11.png" alt="Neumático 11">
+      <h3>Neumático 11</h3>
+      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2011" target="_blank" class="btn-principal">
+        Consultar
+      </a>
+    </div>
 
   </div>
 </section>
+
 
   </div>
 </section>
