@@ -110,89 +110,123 @@
         font-size: 1.5rem;
       }
     }
+
+    /* Estilos para las pestañas de categorías */
+    .categorias-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .tab-btn:hover {
+      background: #2a2a2a;
+      transform: translateY(-2px);
+    }
+
+    .tab-btn.activo {
+      background: #00bfff;
+      color: #000;
+      border-color: #00bfff;
+    }
+
+    .categoria-productos {
+      display: none;
+    }
+
+    .categoria-productos.activo {
+      display: block;
+    }
+
     .productos-grid {
-  display: flex; /* fila horizontal */
-  gap: 20px;
-  overflow-x: auto; /* permite scroll horizontal */
-  padding-bottom: 10px; /* un poquito de espacio abajo */
-  scroll-behavior: smooth; /* scroll suave */
-}
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scroll-behavior: smooth;
+    }
 
-.productos-grid::-webkit-scrollbar {
-  height: 8px; /* alto de la barra de scroll */
-}
+    .productos-grid::-webkit-scrollbar {
+      height: 8px;
+    }
 
-.productos-grid::-webkit-scrollbar-thumb {
-  background: #00bfff; /* color de la barra */
-  border-radius: 4px;
-}
+    .productos-grid::-webkit-scrollbar-thumb {
+      background: #00bfff;
+      border-radius: 4px;
+    }
 
-.productos-grid::-webkit-scrollbar-track {
-  background: #1a1a1a; /* fondo de la barra */
-  border-radius: 4px;
-}
-  
+    .productos-grid::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 4px;
+    }
 
-.producto-card {
-  background: #1a1a1a;
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-  flex: 0 0 220px; /* ancho fijo para que no se achique demasiado */
-  transition: 0.3s ease;
+    .producto-card {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      flex: 0 0 220px;
+      transition: 0.3s ease;
+    }
 
-}
+    .producto-card:hover {
+      transform: translateY(-5px);
+    }
 
-.producto-card:hover {
-  transform: translateY(-5px);
-}
+    .producto-card img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
 
-.producto-card img {
-  width: 100%;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
+    .producto-card h3 {
+      margin: 10px 0 5px 0;
+      color: #00bfff;
+    }
 
-.producto-card h3 {
-  margin: 10px 0 5px 0;
-  color: #00bfff;
-}
+    .producto-precio {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
 
-.producto-precio {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+    .badge-categoria {
+      display: inline-block;
+      background: #00bfff22;
+      color: #00bfff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
 
 <header style="position: relative; overflow: hidden; text-align: center; padding: 3rem 2rem; background: #1c1c1c;">
-  <!-- Capa de fondo con gradiente (efecto profesional) -->
+  <!-- Capa de fondo con gradiente -->
   <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, #00bfff22, #101010);"></div>
   
-  <!-- Contenido principal (por encima del gradiente) -->
+  <!-- Contenido principal -->
   <div style="position: relative; z-index: 1;">
-    <!-- Logo (usando la imagen existente) -->
     <img src="Y & R .jpeg" alt="Taller Y&R" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #00bfff; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,191,255,0.3);">
     
     <h1 style="margin: 0; font-size: 2.5rem; color: white; text-shadow: 2px 2px 5px #00000080;">Taller Y & R</h1>
     <p style="color: #00bfff; font-size: 1.2rem; margin: 0.5rem 0 0.2rem; opacity: 0.9;">⚙️ Especialistas en reparación de patines</p>
     <p style="color: #ccc; margin-top: 0; font-style: italic;">Desde 2025 en Sevilla</p>
     
-    <!-- Botón (ya existente, pero lo mantengo igual) -->
     <a href="https://wa.me/640846390?text=Hola%20quiero%20reservar%20una%20cita" target="_blank" class="btn-principal" style="display: inline-block; margin-top: 1.5rem; padding: 0.8rem 1.5rem; background: #00bfff; color: #000; font-weight: bold; text-decoration: none; border-radius: 6px; transition: 0.3s ease;">
       Reservar cita por WhatsApp
     </a>
@@ -255,108 +289,193 @@
     Viernes: 9:00 – 14:00, 17:00 – 21:00<br>
     Sábado: 9:00 – 14:00, 17:00 – 21:00 (Día de Andalucía) <br>
     Domingo: Cerrado
-
-
-
+  </div>
 </section>
 
 <section>
   <h2>Productos en Venta</h2>
-
-  <div class="productos-grid">
-
-    <div class="producto-card">
-      <img src="img/neumatico1.png" alt="Neumático 1">
-      <h3>Tubeless Cityroad 60/70-6,5</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Tubeless%20Cityroad60/70-6,5" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico2.png" alt="Neumático 2">
-      <h3>Tubeless Cityroad 10*2,70 6,5(255x70) </h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2010*2,70%206,5(255x70)%20Tubeless%20Cityroad" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico3.png" alt="Neumático 3">
-      <h3>Neumático 3</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%203" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico4.png" alt="Neumático 4">
-      <h3>Neumático 4</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%204" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico5.png" alt="Neumático 5">
-      <h3>Neumático 5</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%205" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico6.png" alt="Neumático 6">
-      <h3>Neumático 6</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%206" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico7.png" alt="Neumático 7">
-      <h3>Neumático 7</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%207" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico8.png" alt="Neumático 8">
-      <h3>Neumático 8</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%208" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico9.png" alt="Neumático 9">
-      <h3>Neumático 9</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%209" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico10.png" alt="Neumático 10">
-      <h3>Neumático 10</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2010" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
-    <div class="producto-card">
-      <img src="img/neumatico11.png" alt="Neumático 11">
-      <h3>Neumático 11</h3>
-      <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2011" target="_blank" class="btn-principal">
-        Consultar
-      </a>
-    </div>
-
+  
+  <!-- Botones de categorías -->
+  <div class="categorias-tabs">
+    <button class="tab-btn activo" onclick="cambiarCategoria('neumaticos')">🔧 Neumáticos</button>
+    <button class="tab-btn" onclick="cambiarCategoria('candados')">🔒 Candados</button>
+    <button class="tab-btn" onclick="cambiarCategoria('accesorios')">⚡ Accesorios</button>
   </div>
-</section>
+
+  <!-- Categoría: Neumáticos -->
+  <div id="neumaticos" class="categoria-productos activo">
+    <div class="productos-grid">
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico1.jpeg" alt="Neumático 1">
+        <h3>Tubeless Cityroad 60/70-6,5</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Tubeless%20Cityroad60/70-6,5" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico2.jpeg" alt="Neumático 2">
+        <h3>Tubeless Cityroad 10*2,70 6,5(255x70)</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2010*2,70%206,5(255x70)%20Tubeless%20Cityroad" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico3.jpeg" alt="Neumático 3">
+        <h3>Neumático Innova modelo 60/70-6,5</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Innova%20modelo%2060/70-6,5" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico4.jpeg" alt="Neumático 4">
+        <h3>Neumático tubeless (sin cámara) de 10 pulgadas</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20tubeless%20(sin%20cámara)%20de%2010%20pulgadas" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico5.jpeg" alt="Neumático 5">
+        <h3>Neumático sin cámara (tubeless) </h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20sin%20camara%20(tubeless)" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico6.jpeg" alt="Neumático 6">
+        <h3>Neumático 9,5 x 2,5-6,1 Tubeless Cityroad.</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%209,5%20x%202,5-6,1%20Tubeless%20Cityroad" target="_blank" class="btn-principal">Consultar</a>
+      </div>div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico7.jpeg" alt="Neumático 7">
+        <h3> Neumático 60/70-7.0 Tubeless Cityroad.</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2060/70-7.0%20Tubeless%20Cityroad" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico8.jpeg" alt="Neumático 8">
+        <h3>Neumático 10x2.5-6 Tubetype Cityroad CST. [1, 2, 4]</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2010x2.5-6%20Tubetype%20Cityroad%20CST.%20[1,%202,%204]" target="_blank" class="btn-principal">Consultar</a>
+      </div> 
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico9.jpeg" alt="Neumático 9">
+        <h3>Neumático 80/55-7 Tubeless Urbana CST.</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2080/55-7%20Tubeless%20Urbana%20CST" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico10.jpeg" alt="Neumático 10">
+        <h3>Neumático 10,5x2,75-7 Tubeless Cityroad Xuancheng</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%2010,5x2,75-7%20Tubeless%20Cityroad%20Xuancheng" target="_blank" class="btn-principal">Consultar</a>
+      </div> 
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico11.jpeg" alt="Neumático 11">
+        <h3>Neumático 250x54 Tubeless Cityroad Xuancheng.</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20250x54%20Tubeless%20Cityroad%20Xuancheng" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico12.jpeg" alt="Neumático 12">
+        <h3>Cámara de aire 10x2.125 Válvula 90°/45° Amalibay.</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Cámara%20de%20aire%2010x2.125%20Válvula%2090°/45°%20Amalibay" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico13.jpeg" alt="Neumático 13">
+        <h3>Cámara de aire 10x2,5 Válvula 90°/90° Amalibay.</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Cámara%20de%20aire%2010x2,5%20Válvula%2090°/90°%20Amalibay" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/neumaticos/neumatico14.jpeg" alt="Neumático 14">
+        <h3>Cámara de aire 10x2.125 Válvula Recta Amalibay.</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Cámara%20de%20aire%2010x2.125%20Válvula%20Recta%20Amalibay" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+       <div class="producto-card">
+        <img src="img/neumaticos/neumatico15.jpeg" alt="Neumático 15">
+        <h3>Cámara de aire 8,5x2,00 Válvula Recta Amalibay.</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Cámara%20de%20aire%208,5x2,00%20Válvula%20Recta%20Amalibay" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+       <div class="producto-card">
+        <img src="img/neumaticos/neumatico16.jpeg" alt="Neumático 16">
+        <h3>Rueda maciza 10x2,5-6,5 Offroad V2 Nedong.</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Rueda%20maciza%2010x2,5-6,5%20Offroad%20V2%20Nedong" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+        <div class="producto-card">
+          <img src="img/neumaticos/neumatico17.jpeg" alt="Neumático 17">
+          <h3>Rueda maciza 10x2.125 Offroad V2 Nedong.</h3>
+          <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Rueda%20maciza%2010x2.125%20Offroad%20V2%20Nedong" target="_blank" class="btn-principal">Consultar</a>
+        </div>
+         <div class="producto-card">
+          <img src="img/neumaticos/neumatico18.jpeg" alt="Neumático 18">
+          <h3>Rueda maciza 8,5x2 Cityroad Nedong.</h3>
+          <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Rueda%20maciza%208,5x2%20Cityroad%20Nedong" target="_blank" class="btn-principal">Consultar</a>
+         </div>
+          <div class="producto-card">
+          <img src="img/neumaticos/neumatico19.jpeg" alt="Neumático 19">
+          <h3>Rueda maciza 8,5x2 Cityroad Nedong.</h3>
+          <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Rueda%20maciza%208,5x2%20Cityroad%20Nedong" target="_blank" class="btn-principal">Consultar</a> 
+        </div>
+         <div class="producto-card">
+          <img src="img/neumaticos/neumatico20.jpeg" alt="Neumático 20">
+          <h3>Rueda maciza 8,5x2 Cityroad Nedong.</h3>
+          <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Rueda%20maciza%208,5x2%20Cityroad%20Nedong" target="_blank" class="btn-principal">Consultar</a>
+         </div>
+          <div class="producto-card">
+          <img src="img/neumaticos/neumatico21.jpeg" alt="Neumático 21">
+          <h3>Rueda maciza 10x2,5-6,5 Cityroad Nedong.</h3>
+          <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Rueda%20maciza%2010x2,5-6,5%20Cityroad%20Nedong" target="_blank" class="btn-principal">Consultar</a>
+          </div>
+           <div class="producto-card">
+          <img src="img/neumaticos/neumatico22.jpeg" alt="Neumático 22">
+          <h3>Rueda maciza 10x2.125 Offroad V2 Nedong.</h3>
+          <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Rueda%20maciza%2010x2.125%20Offroad%20V2%20Nedong" target="_blank" class="btn-principal">Consultar</a>
+           </div>
+            <div class="producto-card">
+          <img src="img/neumaticos/neumatico23.jpeg" alt="Neumático 23">
+          <h3>Neumático 80/55-7,5 Tubeless Offroad Xuancheng.</h3>
+          <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Neumático%2080/55-7,5%20Tubeless%20Offroad%20Xuancheng" target="_blank" class="btn-principal">Consultar</a>
+           </div>
+            <div class="producto-card">
+          <img src="img/neumaticos/neumatico24.jpeg" alt="Neumático 24">
+          <h3>Neumático 90/65-6.5 Tubeless Cityroad Xuancheng.</h3>
+          <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Neumático%2090/65-6.5%20Tubeless%20Cityroad%20Xuancheng" target="_blank" class="btn-principal">Consultar</a>
+          </div>
+         
 
 
+    </div> 
+  </div>
+
+  <!-- Categoría: Candados -->
+  <div id="candados" class="categoria-productos">
+    <div class="productos-grid">
+      <div class="producto-card">
+        <img src="img/candados/candado1.jpeg" alt="Candado 1">
+        <h3>Candado tipo U-Lock</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20candado%20tipo%20U-Lock" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/candados/candado2.jpeg" alt="Candado 2">
+        <h3>Candado antirrobo en forma de U</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20candado%20antirrobo%20en%20forma%20de%20U" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/candados/candado3.jpeg" alt="Candado 3">
+        <h3>Candado de cadena con combinación</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20candado%20de%20cadena%20con%20combinación" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/candados/candado4.jpeg" alt="Candado 4">
+        <h3>Candado de cable antirrobo con combinación numérica de 5 dígitos</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20candado%20de%20cable%20antirrobo%20con%20combinación%20numérica%20de%205%20dígitos" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categoría: Accesorios -->
+  <div id="accesorios" class="categoria-productos">
+    <div class="productos-grid">
+      <div class="producto-card">
+        <img src="img/accesorios/kit-luces-led.jpeg" alt="Kit de Luces">
+        <h3>Kit de Luces LED</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20kit%20de%20luces%20LED" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/accesorios/casco-seguridad.jpeg" alt="Casco">
+        <h3>Casco de Seguridad</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20casco" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+      <div class="producto-card">
+        <img src="img/accesorios/guantes1.jpeg" alt="Guantes">
+        <h3>Guantes Tácticos</h3>
+        <a href="https://wa.me/640846390?text=Hola%20me%20interesan%20los%20guantes" target="_blank" class="btn-principal">Consultar</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -366,10 +485,9 @@
     Si quedaste contento con nuestro servicio, déjanos una reseña en Google Maps. 
     Nos ayuda a mejorar y a que más patinadores conozcan Taller Y & R.
   </p>
-  <a href=https://maps.app.goo.gl/s8thZWRv2MPniStQ8 target="_blank" class="btn-principal">
+  <a href="https://maps.app.goo.gl/s8thZWRv2MPniStQ8" target="_blank" class="btn-principal">
     Dejar reseña en Google
   </a>
-</div>
 </section>
 
 <section>
@@ -388,6 +506,29 @@
 <footer>
   Taller Y & R © 2026 | Reparación de Patines en Sevilla
 </footer>
+
+<!-- JavaScript para las pestañas -->
+<script>
+function cambiarCategoria(categoria) {
+  // Ocultar todas las categorías
+  var categorias = document.getElementsByClassName('categoria-productos');
+  for (var i = 0; i < categorias.length; i++) {
+    categorias[i].classList.remove('activo');
+  }
+  
+  // Mostrar la categoría seleccionada
+  document.getElementById(categoria).classList.add('activo');
+  
+  // Quitar clase activo de todos los botones
+  var botones = document.getElementsByClassName('tab-btn');
+  for (var i = 0; i < botones.length; i++) {
+    botones[i].classList.remove('activo');
+  }
+  
+  // Añadir clase activo al botón clickeado
+  event.target.classList.add('activo');
+}
+</script>
 
 </body>
 </html>
