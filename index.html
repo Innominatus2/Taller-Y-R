@@ -358,14 +358,34 @@
 </style>
 
 <script>
-// Lista de productos para búsqueda (puedes ampliarla)
-const productos = [
-  { nombre: "Tubeless Cityroad 60/70-6,5", categoria: "neumaticos", link: "https://wa.me/34640846390?text=Hola%20me%20interesa%20Tubeless%20Cityroad%2060/70-6,5" },
-  { nombre: "Tubeless Cityroad 10*2,70 6,5", categoria: "neumaticos" },
-  { nombre: "Neumático Innova 60/70-6,5", categoria: "neumaticos" },
-  { nombre: "Candado tipo U-Lock", categoria: "candados" },
-  // Añade más productos aquí...
-];
+// Función para generar array de productos automáticamente desde el DOM
+function generarProductosDesdeDOM() {
+  const productos = [];
+  const productoCards = document.querySelectorAll('.producto-card');
+  
+  productoCards.forEach(card => {
+    const nombre = card.querySelector('h3')?.textContent.trim();
+    const categoria = card.closest('.categoria-productos')?.id || 'otros';
+    
+    if (nombre) {
+      // Evitar duplicados
+      if (!productos.some(p => p.nombre === nombre)) {
+        productos.push({ nombre: nombre, categoria: categoria });
+      }
+    }
+  });
+  
+  return productos;
+}
+
+// Variable global para productos
+let productos = [];
+
+// Cargar productos cuando la página esté lista
+document.addEventListener('DOMContentLoaded', function() {
+  productos = generarProductosDesdeDOM();
+  console.log('Productos cargados:', productos.length); // Para verificar
+});
 
 document.getElementById('buscador').addEventListener('input', function(e) {
   const busqueda = e.target.value.toLowerCase();
@@ -376,16 +396,30 @@ document.getElementById('buscador').addEventListener('input', function(e) {
     return;
   }
   
+  // Si no hay productos, generarlos
+  if (productos.length === 0) {
+    productos = generarProductosDesdeDOM();
+  }
+  
   const resultados = productos.filter(p => 
     p.nombre.toLowerCase().includes(busqueda)
   );
   
   if(resultados.length > 0) {
-    resultadosDiv.innerHTML = resultados.map(p => 
-      `<div class="resultado-item" onclick="window.open('${p.link || 'https://wa.me/34640846390?text=Hola%20me%20interesa%20' + encodeURIComponent(p.nombre)}', '_blank')">
+    resultadosDiv.innerHTML = resultados.map(p => {
+      // Crear texto para WhatsApp sin acentos
+      const textoWA = p.nombre
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      
+      const linkWA = `https://wa.me/34640846390?text=Hola%20me%20interesa%20${encodeURIComponent(textoWA)}`;
+      
+      return `<div class="resultado-item" onclick="window.open('${linkWA}', '_blank')">
         🔧 ${p.nombre}
-      </div>`
-    ).join('');
+      </div>`;
+    }).join('');
     resultadosDiv.style.display = 'block';
   } else {
     resultadosDiv.innerHTML = '<div class="resultado-item">😕 No encontrado</div>';
@@ -400,20 +434,6 @@ document.addEventListener('click', function(e) {
   }
 });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   <!-- Categoría: Neumáticos -->
@@ -1172,7 +1192,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-
 
 </body>
 </html>
