@@ -1144,6 +1144,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   </style>
 
+  <script>
+// Corregir enlaces de WhatsApp automáticamente
+document.addEventListener('DOMContentLoaded', function() {
+  // Seleccionar todos los enlaces que van a WhatsApp
+  const enlacesWA = document.querySelectorAll('a[href*="wa.me"]');
+  
+  enlacesWA.forEach(enlace => {
+    let href = enlace.getAttribute('href');
+    
+    // Reemplazar caracteres acentuados en la parte del texto
+    if (href.includes('text=')) {
+      href = href.replace(/[áäàâ]/g, 'a')
+                 .replace(/[éëèê]/g, 'e')
+                 .replace(/[íïìî]/g, 'i')
+                 .replace(/[óöòô]/g, 'o')
+                 .replace(/[úüùû]/g, 'u')
+                 .replace(/ñ/g, 'n')
+                 .replace(/Ñ/g, 'N');
+      
+      enlace.setAttribute('href', href);
+    }
+  });
+});
+</script>
+
 
 </body>
 </html>
