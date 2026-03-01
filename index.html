@@ -233,6 +233,8 @@
   </div>
 </header>
 
+
+
 <section class="servicios">
   <h2>Servicios</h2>
   <ul>
@@ -301,6 +303,118 @@
     <button class="tab-btn" onclick="cambiarCategoria('candados')">🔒 Candados</button>
     <button class="tab-btn" onclick="cambiarCategoria('accesorios')">⚡ Accesorios</button>
   </div>
+
+<!-- AÑADIR ANTES DE LAS CATEGORÍAS DE PRODUCTOS -->
+<div class="buscador-productos">
+  <input type="text" id="buscador" placeholder="🔍 Busca neumáticos, candados... (ej: 10 pulgadas, tubeless)">
+  <div id="resultados-busqueda" class="resultados-busqueda"></div>
+</div>
+
+<style>
+.buscador-productos {
+  margin: 20px 0;
+  position: relative;
+}
+
+.buscador-productos input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 30px;
+  border: 2px solid #00bfff;
+  background: #1a1a1a;
+  color: white;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.buscador-productos input:focus {
+  outline: none;
+  box-shadow: 0 0 15px #00bfff;
+}
+
+.resultados-busqueda {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #1a1a1a;
+  border-radius: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: none;
+  z-index: 100;
+  border: 1px solid #333;
+}
+
+.resultado-item {
+  padding: 10px;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+}
+
+.resultado-item:hover {
+  background: #00bfff22;
+}
+</style>
+
+<script>
+// Lista de productos para búsqueda (puedes ampliarla)
+const productos = [
+  { nombre: "Tubeless Cityroad 60/70-6,5", categoria: "neumaticos", link: "https://wa.me/640846390?text=Hola%20me%20interesa%20Tubeless%20Cityroad%2060/70-6,5" },
+  { nombre: "Tubeless Cityroad 10*2,70 6,5", categoria: "neumaticos" },
+  { nombre: "Neumático Innova 60/70-6,5", categoria: "neumaticos" },
+  { nombre: "Candado tipo U-Lock", categoria: "candados" },
+  // Añade más productos aquí...
+];
+
+document.getElementById('buscador').addEventListener('input', function(e) {
+  const busqueda = e.target.value.toLowerCase();
+  const resultadosDiv = document.getElementById('resultados-busqueda');
+  
+  if(busqueda.length < 2) {
+    resultadosDiv.style.display = 'none';
+    return;
+  }
+  
+  const resultados = productos.filter(p => 
+    p.nombre.toLowerCase().includes(busqueda)
+  );
+  
+  if(resultados.length > 0) {
+    resultadosDiv.innerHTML = resultados.map(p => 
+      `<div class="resultado-item" onclick="window.open('${p.link || 'https://wa.me/640846390?text=Hola%20me%20interesa%20' + encodeURIComponent(p.nombre)}', '_blank')">
+        🔧 ${p.nombre}
+      </div>`
+    ).join('');
+    resultadosDiv.style.display = 'block';
+  } else {
+    resultadosDiv.innerHTML = '<div class="resultado-item">😕 No encontrado</div>';
+    resultadosDiv.style.display = 'block';
+  }
+});
+
+// Cerrar búsqueda al hacer clic fuera
+document.addEventListener('click', function(e) {
+  if(!e.target.closest('.buscador-productos')) {
+    document.getElementById('resultados-busqueda').style.display = 'none';
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <!-- Categoría: Neumáticos -->
   <div id="neumaticos" class="categoria-productos activo">
@@ -425,9 +539,6 @@
           <h3>Neumático 90/65-6.5 Tubeless Cityroad Xuancheng.</h3>
           <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20neumatico%20Neumático%2090/65-6.5%20Tubeless%20Cityroad%20Xuancheng" target="_blank" class="btn-principal">Consultar</a>
           </div>
-         
-
-
     </div> 
   </div>
 
@@ -453,9 +564,10 @@
         <img src="img/candados/candado4.jpeg" alt="Candado 4">
         <h3>Candado de cable antirrobo con combinación numérica de 5 dígitos</h3>
         <a href="https://wa.me/640846390?text=Hola%20me%20interesa%20el%20candado%20de%20cable%20antirrobo%20con%20combinación%20numérica%20de%205%20dígitos" target="_blank" class="btn-principal">Consultar</a>
-      </div>
-    </div>
+         </div>
+    </div> 
   </div>
+
 
   <!-- Categoría: Accesorios -->
 <div id="accesorios" class="categoria-productos">
@@ -489,8 +601,8 @@
       Seguir en Instagram
     </a>
   </div>
-</section>
 
+</section>
 <footer>
   Taller Y & R © 2026 | Reparación de Patines en Sevilla
 </footer>
@@ -517,6 +629,408 @@ function cambiarCategoria(categoria) {
   event.target.classList.add('activo');
 }
 </script>
+
+<!-- Modal para imagen completa -->
+<div id="modal-imagen" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); cursor: pointer;">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    <img id="imagen-ampliada" src="" alt="Imagen ampliada" style="max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 5px;">
+  </div>
+  <span style="position: absolute; top: 20px; right: 35px; color: white; font-size: 40px; font-weight: bold; cursor: pointer;">&times;</span>
+</div>
+
+<script>
+// Hacer que la imagen sea clickeable
+document.addEventListener('DOMContentLoaded', function() {
+  const logoImg = document.querySelector('header img[alt="Taller Y&R"]');
+  const modal = document.getElementById('modal-imagen');
+  const modalImg = document.getElementById('imagen-ampliada');
+  const closeBtn = document.querySelector('#modal-imagen span');
+
+  // Abrir modal al hacer clic en la imagen
+  logoImg.style.cursor = 'pointer';
+  logoImg.addEventListener('click', function() {
+    modal.style.display = 'block';
+    modalImg.src = this.src;
+  });
+
+  // Cerrar modal al hacer clic en la X
+  closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+
+  // Cerrar modal al hacer clic fuera de la imagen
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal || e.target === modalImg) {
+      modal.style.display = 'none';
+    }
+  });
+});
+</script>
+
+<button onclick="cambiarTema()" id="tema-btn" style="position: fixed; top: 20px; right: 20px; background: #00bfff; border: none; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; z-index: 1000; font-size: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+  🌙
+</button>
+
+<script>
+function cambiarTema() {
+  const body = document.body;
+  const boton = document.getElementById('tema-btn');
+  
+  body.classList.toggle('tema-claro');
+  
+  // Cambiar el ícono según el tema
+  if (body.classList.contains('tema-claro')) {
+    boton.textContent = '☀️'; // Sol para modo claro
+    localStorage.setItem('tema', 'claro');
+  } else {
+    boton.textContent = '🌙'; // Luna para modo oscuro
+    localStorage.setItem('tema', 'oscuro');
+  }
+}
+
+// Cargar tema guardado al iniciar
+document.addEventListener('DOMContentLoaded', function() {
+  const temaGuardado = localStorage.getItem('tema');
+  const boton = document.getElementById('tema-btn');
+  
+  if (temaGuardado === 'claro') {
+    document.body.classList.add('tema-claro');
+    boton.textContent = '☀️';
+  } else {
+    boton.textContent = '🌙';
+  }
+});
+</script>
+
+<style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #f2f2f2;
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* MODO CLARO - Todas las variables */
+    body.tema-claro {
+      background: #f5f5f5;
+      color: #333;
+    }
+    
+    body.tema-claro header {
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    body.tema-claro .btn-principal {
+      background: #00bfff;
+      color: #000;
+    }
+    
+    body.tema-claro .btn-principal:hover {
+      background: #009acd;
+    }
+    
+    body.tema-claro .servicios li {
+      background: #ffffff;
+      color: #333;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    body.tema-claro .precio-card {
+      background: #ffffff;
+      color: #333;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    body.tema-claro .info-box {
+      background: #ffffff;
+      color: #333;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    body.tema-claro .producto-card {
+      background: #ffffff;
+      color: #333;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    body.tema-claro .producto-card h3 {
+      color: #00bfff;
+    }
+    
+    body.tema-claro .tab-btn {
+      background: #e0e0e0;
+      color: #333;
+    }
+    
+    body.tema-claro .tab-btn:hover {
+      background: #d0d0d0;
+    }
+    
+    body.tema-claro .tab-btn.activo {
+      background: #00bfff;
+      color: #000;
+    }
+    
+    body.tema-claro .categorias-tabs .tab-btn {
+      border: 1px solid #ccc;
+    }
+    
+    body.tema-claro footer {
+      background: #ffffff;
+      color: #666;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+    
+    body.tema-claro .mensaje-sin-productos {
+      background: #ffffff;
+      color: #333;
+    }
+    
+    body.tema-claro .mensaje-sin-productos p:first-child {
+      color: #333;
+    }
+    
+    body.tema-claro .productos-grid::-webkit-scrollbar-track {
+      background: #e0e0e0;
+    }
+
+    header {
+      background: #1c1c1c;
+      padding: 2rem;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      color: #aaa;
+      margin-top: 0.5rem;
+    }
+
+    .btn-principal {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      background: #00bfff;
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: 0.3s ease;
+    }
+
+    .btn-principal:hover {
+      background: #009acd;
+      transform: translateY(-3px);
+    }
+
+    section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      border-left: 4px solid #00bfff;
+      padding-left: 10px;
+    }
+
+    .servicios ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .servicios li {
+      background: #1a1a1a;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .precio-card {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 5px;
+      margin: 10px 0;
+      border-left: 4px solid #00bfff;
+      transition: background-color 0.3s;
+    }
+
+    .precio-card h3 {
+      margin-top: 0;
+      color: #00bfff;
+    }
+
+    .precio {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00bfff;
+    }
+
+    .info-box {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #1c1c1c;
+      color: #888;
+      font-size: 0.9rem;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Estilos para las pestañas de categorías */
+    .categorias-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .tab-btn:hover {
+      background: #2a2a2a;
+      transform: translateY(-2px);
+    }
+
+    .tab-btn.activo {
+      background: #00bfff;
+      color: #000;
+      border-color: #00bfff;
+    }
+
+    .categoria-productos {
+      display: none;
+    }
+
+    .categoria-productos.activo {
+      display: block;
+    }
+
+    .productos-grid {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .productos-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .productos-grid::-webkit-scrollbar-thumb {
+      background: #00bfff;
+      border-radius: 4px;
+    }
+
+    .productos-grid::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .producto-card {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      flex: 0 0 220px;
+      transition: 0.3s ease;
+    }
+
+    .producto-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .producto-card img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .producto-card h3 {
+      margin: 10px 0 5px 0;
+      color: #00bfff;
+      transition: color 0.3s;
+    }
+
+    .producto-precio {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .badge-categoria {
+      display: inline-block;
+      background: #00bfff22;
+      color: #00bfff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    .mensaje-sin-productos {
+      text-align: center;
+      padding: 60px 20px;
+      background: #1a1a1a;
+      border-radius: 10px;
+      margin: 20px 0;
+      transition: background-color 0.3s;
+    }
+
+    .mensaje-sin-productos p:first-child {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00bfff;
+      margin-bottom: 10px;
+    }
+
+    .mensaje-sin-productos p:last-child {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+
+    /* Estilos para los enlaces de redes sociales en modo claro */
+    body.tema-claro .info-box a.btn-principal {
+      color: #000;
+    }
+    
+    body.tema-claro .info-box a.btn-principal:hover {
+      color: #000;
+    }
+  </style>
 
 </body>
 </html>
