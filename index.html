@@ -748,7 +748,31 @@ document.addEventListener('click', function(e) {
     <a href="https://www.instagram.com/raikolcordova?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="btn-principal" style="margin-left:10px;">
       Seguir en Instagram
     </a>
+</section>
+
+<!-- SECCIÓN COMPARTIR - COHERENTE CON EL DISEÑO -->
+<section>
+  <h2>📲 ¿Nos recomiendas?</h2>
+  <div class="info-box" style="text-align: center;">
+    <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+      Si te gusta nuestro trabajo, ¡comparte esta página con tus amigos!
+    </p>
+    <div style="display: flex; gap: 15px; justify-content: center; align-items: center; flex-wrap: wrap;">
+      <!-- Link directo que se puede copiar (presentado como texto, no input) -->
+      <span style="background: #00bfff22; padding: 10px 20px; border-radius: 50px; color: #00bfff; font-weight: bold; border: 1px solid #00bfff; word-break: break-all;">
+        https://innominatus2.github.io/Taller-Y-R/
+      </span>
+      <!-- Botón principal para copiar -->
+      <button class="btn-principal" id="btn-copiar-enlace" style="margin-top: 0;" onclick="copiarEnlace()">
+        📋 Copiar enlace
+      </button>
+    </div>
+    <p id="mensaje-copiado" style="color: #aaa; font-size: 0.9rem; margin-top: 1rem; min-height: 20px;"></p>
   </div>
+</section>
+<!-- FIN SECCIÓN COMPARTIR -->
+
+
 
 </section>
 <footer>
@@ -1225,6 +1249,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+</script>
+
+<script>
+function copiarEnlace() {
+  const enlacePagina = 'https://innominatus2.github.io/Taller-Y-R/';
+  navigator.clipboard.writeText(enlacePagina).then(() => {
+    const mensaje = document.getElementById('mensaje-copiado');
+    mensaje.textContent = '✅ ¡Enlace copiado al portapapeles!';
+    setTimeout(() => {
+      mensaje.textContent = '';
+    }, 2000);
+  }).catch(() => {
+    alert('No se pudo copiar el enlace. Puedes seleccionarlo manualmente.');
+  });
+}
 </script>
 
 </body>
