@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taller Y&R · Reparación profesional de patines</title>
+  <link rel="icon" href="Y & R .jpeg" type="image/jpeg">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: #0c0c0c;
+      color: #f0f0f0;
+      line-height: 1.5;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* ===== MODO CLARO BIEN INTEGRADO ===== */
+    body.light-mode {
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    body.light-mode .header {
+      background: white;
+      border-bottom-color: #e2e8f0;
+    }
+    body.light-mode .tab-container {
+      background: rgba(255,255,255,0.9);
+      border-bottom-color: #e2e8f0;
+    }
+    body.light-mode .tab {
+      color: #64748b;
+      border-color: #e2e8f0;
+    }
+    body.light-mode .tab.activo {
+      background: #00bfff;
+      color: #0a0a0a;
+      border-color: #00bfff;
+    }
+    body.light-mode .content-card {
+      background: white;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    body.light-mode footer {
+      background: white;
+      border-top-color: #e2e8f0;
+      color: #64748b;
+    }
+
+    /* ===== HEADER FIJO ===== */
+    .header {
+      background: #111;
+      padding: 2rem 2rem 1.5rem;
+      border-bottom: 2px solid #00bfff;
+      transition: background 0.2s;
+    }
+    .header-content {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #00bfff;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .header-text h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #fff, #ccc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent; /* fallback */
+    }   
+    .header-text p {
+      color: #aaa;
+      font-size: 1.1rem;
+      margin-top: 0.3rem;
+    }
+
+    .logo:hover {
+    transform: scale(1.02);
+     box-shadow: 0 0 0 3px rgba(0,191,255,0.3);
+    }
+
+    /* ===== PESTAÑAS PRINCIPALES ===== */
+    .tab-container {
+      position: sticky;
+      top: 0;
+      background: rgba(19, 16, 16, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #2a2a2a;
+      padding: 1rem 2rem;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .tabs {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .tab {
+      background: transparent;
+      border: 2px solid #333;
+      color: #ccc;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tab:hover {
+      border-color: #00bfff;
+      color: #00bfff;
+    }
+    .tab.activo {
+      background: #00bfff;
+      border-color: #00bfff;
+      color: #0a0a0a;
+      box-shadow: 0 4px 12px rgba(0,191,255,0.3);
+    }
+
+    /* ===== CONTENEDOR PRINCIPAL ===== */
+    main {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      min-height: 60vh;
+    }
+
+    /* ===== CADA SECCIÓN ES INDEPENDIENTE ===== */
+    .seccion {
+      display: none;
+    }
+    .seccion.activa {
+      display: block;
+    }
+
+    /* ===== TARJETAS DE CONTENIDO ===== */
+    .content-card {
+      background: #151515;
+      border-radius: 24px;
+      padding: 2rem;
+      border: 1px solid #2a2a2a;
+      transition: background 0.2s, border-color 0.2s;
+      margin-bottom: 2rem;
+    }
+
+    /* PRODUCTOS EN GRID */
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .producto-card {
+      background: #1f1f1f;
+      border-radius: 16px;
+      padding: 1rem;
+      border: 1px solid #333;
+      transition: 0.2s;
+    }
+    .producto-card:hover {
+      border-color: #00bfff;
+      transform: translateY(-4px);
+    }
+    .producto-card img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .producto-card h3 {
+      font-size: 1rem;
+      margin: 0.8rem 0 0.5rem;
+      color: #00bfff;
+    }
+    .producto-card a {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border: 1px solid #00bfff;
+      border-radius: 40px;
+      color: #00bfff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: 0.2s;
+    }
+    .producto-card a:hover {
+      background: #00bfff;
+      color: black;
+    }
+
+    /* ===== SECCIÓN TALLER (UBICACIÓN + HORARIO + FOTOS) ===== */
+    .taller-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .info-block {
+      background: #1f1f1f;
+      padding: 1.5rem;
+      border-radius: 20px;
+    }
+    .info-block h3 {
+      color: #00bfff;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .fotos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .fotos-grid img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 2px solid #333;
+    }
+
+    /* ===== SECCIÓN COMPARTIR (SIEMPRE VISIBLE) ===== */
+    .share-section {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    .share-box {
+      background: #151515;
+      border-radius: 60px;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border: 1px solid #333;
+    }
+    .share-box span {
+      color: #00bfff;
+      font-weight: 500;
+    }
+    .btn-copiar {
+      background: #00bfff;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #111;
+      border-top: 1px solid #2a2a2a;
+      color: #666;
+      margin-top: 3rem;
+      transition: background 0.2s;
+    }
+
+    /* ===== BOTONES FLOTANTES ===== */
+    .floating-actions {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 200;
+    }
+    .float-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: #00bfff;
+      color: black;
+      font-size: 1.6rem;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .float-btn.whatsapp {
+      background: #25D366;
+      color: white;
+    }
+    .float-btn:hover {
+      transform: scale(1.1);
+    }
+    /* ===== MEJORAS MÓVIL ===== */
+@media (max-width: 600px) {
+  /* Header más compacto */
+  .header {
+    padding: 1rem 1rem;
+  }
+  
+  .header-content {
+    gap: 1rem;
+  }
+  
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .header-text h1 {
+    font-size: 1.8rem;
+  }
+  
+  .header-text p {
+    font-size: 0.9rem;
+  }
+
+  /* Pestañas más pequeñas y que no desborden */
+  .tab-container {
+    padding: 0.8rem 1rem;
+  }
+  
+  .tabs {
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .tab {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  /* Buscador */
+  .buscador-container {
+    padding: 0 1rem;
+    margin: 0.8rem auto 0;
+  }
+  
+  .buscador-container div:first-child {
+    padding: 0.3rem 1rem;
+  }
+  
+  #buscadorGlobal {
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+  }
+
+  /* Resultados del buscador */
+  #resultadosGlobal {
+    left: 1rem;
+    right: 1rem;
+    max-height: 300px;
+  }
+
+  /* Tarjetas de productos */
+  .content-card {
+    padding: 1rem;
+  }
+  
+  .productos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .producto-card {
+    padding: 0.8rem;
+  }
+  
+  .producto-card h3 {
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+  }
+  
+  .producto-card a {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  /* Sección Inicio */
+  #inicio .content-card > div {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  /* Taller */
+  .taller-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .info-block {
+    padding: 1rem;
+  }
+  
+  .fotos-grid {
+    gap: 0.5rem;
+  }
+  
+  .fotos-grid img {
+    height: 100px;
+  }
+
+  /* Compartir */
+  .share-box {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .share-box > div {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .share-box span {
+    font-size: 0.9rem;
+    word-break: break-all;
+  }
+  
+  .btn-copiar {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  /* Botones flotantes */
+  .floating-actions {
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  .float-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.4rem;
+  }
+
+  footer {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Ajuste para pantallas muy pequeñas */
+@media (max-width: 380px) {
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tab {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .header-text h1 {
+    font-size: 1.5rem;
+  }
+}
+/* Redes sociales en móvil */
+.share-section .share-box {
+  gap: 1rem;
+}
+
+.share-section .share-box > div {
+  flex-direction: row !important;
+  justify-content: center;
+}
+    
+
+    @media (max-width: 700px) {
+      .taller-grid { grid-template-columns: 1fr; }
+      .header-content { flex-direction: column; text-align: center; }
+      .share-box { flex-direction: column; text-align: center; }
+    }
+
+    /* Redes sociales en móvil */
+    .share-box a div:hover {
+    background: #2a2a2a;
+    transform: translateY(-2px);
+}
+  </style>
+</head>
+<body>
+
+<!-- HEADER (siempre visible) -->
+<div class="header">
+  <div class="header-content">
+    <img src="Y & R .jpeg" alt="Logo Taller Y&R" class="logo" id="logo-img">
+    <div class="header-text">
+      <h1>Taller Y&R</h1>
+      <p>⚡ Especialistas en reparación de patines eléctricos · Sevilla</p>
+    </div>
+  </div>
+</div>
+
+<!-- PESTAÑAS PRINCIPALES -->
+<div class="tab-container">
+  <div class="tabs">
+    <button class="tab activo" data-seccion="inicio">🏠 Inicio</button>
+    <button class="tab" data-seccion="neumaticos">🔧 Neumáticos</button>
+    <button class="tab" data-seccion="candados">🔒 Candados</button>
+    <button class="tab" data-seccion="accesorios">⚡ Accesorios</button>
+    <button class="tab" data-seccion="taller">📍 Taller</button>
+    <button class="tab" data-seccion="redes">📱 Redes sociales</button>
+  </div>
+</div>
+
+
+<!-- BUSCADOR GLOBAL (justo después de las pestañas) -->
+<div class="buscador-container" style="max-width:1300px; margin:1rem auto 0; padding:0 2rem; position:relative;">
+  <div style="background:#151515; border-radius:60px; padding:0.5rem 1.5rem; display:flex; align-items:center; border:2px solid #00bfff;">
+    <span style="color:#00bfff; font-size:1.5rem; margin-right:0.8rem;">🔍</span>
+    <input type="text" id="buscadorGlobal" placeholder="Busca por nombre o número (ej: 7, tubeless, cityroad...)" style="width:100%; background:transparent; border:none; color:white; font-size:1rem; padding:0.8rem 0;" autocomplete="off">
+  </div>
+  
+  <!-- RESULTADOS -->
+  <div id="resultadosGlobal" style="position:absolute; top:100%; left:2rem; right:2rem; background:#1f1f1f; border-radius:20px; margin-top:0.5rem; max-height:400px; overflow-y:auto; display:none; z-index:1000; border:1px solid #333; box-shadow:0 10px 30px rgba(0,0,0,0.5);"></div>
+</div>
+
+<!-- SCRIPT DEL BUSCADOR (una sola vez) -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const buscador = document.getElementById('buscadorGlobal');
+    const resultados = document.getElementById('resultadosGlobal');
+    
+    // Función para escanear TODOS los productos de la web
+    function escanearProductos() {
+      const productos = [];
+      
+      // Buscar en TODAS las categorías (aunque estén ocultas)
+      document.querySelectorAll('.producto-card').forEach((card, index) => {
+        const img = card.querySelector('img');
+        const nombre = card.querySelector('h3')?.textContent.trim() || 'Sin nombre';
+        const link = card.querySelector('a')?.href;
+        
+        // Detectar categoría por el padre o por la imagen
+        let categoria = 'desconocida';
+        let imgNum = '?';
+        
+        // Intentar extraer número y categoría de la ruta de la imagen
+        if (img && img.src) {
+          const matchNeumatico = img.src.match(/neumaticos?[\/\\]neumatico(\d+)\./i);
+          const matchCandado = img.src.match(/candados?[\/\\]candado(\d+)\./i);
+          const matchAccesorio = img.src.match(/accesorios?[\/\\]accesorio(\d+)\./i);
+          
+          if (matchNeumatico) {
+            categoria = 'neumaticos';
+            imgNum = matchNeumatico[1];
+          } else if (matchCandado) {
+            categoria = 'candados';
+            imgNum = matchCandado[1];
+          } else if (matchAccesorio) {
+            categoria = 'accesorios';
+            imgNum = matchAccesorio[1];
+          }
+        }
+        
+        productos.push({
+          nombre: nombre,
+          link: link,
+          categoria: categoria,
+          numero: imgNum,
+          card: card,
+          id: `prod-${categoria}-${imgNum}-${index}`
+        });
+      });
+      
+      return productos;
+    }
+
+    const todosProductos = escanearProductos();
+    console.log(`📦 Buscador cargado: ${todosProductos.length} productos`);
+
+    buscador.addEventListener('input', (e) => {
+      const texto = e.target.value.toLowerCase().trim();
+      
+      if (texto.length < 2) {
+        resultados.style.display = 'none';
+        return;
+      }
+
+      // Buscar en todos los productos
+      const filtrados = todosProductos.filter(p => {
+        const nombreMatch = p.nombre.toLowerCase().includes(texto);
+        const numMatch = p.numero.includes(texto);
+        const categoriaMatch = p.categoria.includes(texto);
+        const busquedaGenerica = texto === 'neumatico' + p.numero || 
+                                 texto === 'candado' + p.numero ||
+                                 texto === 'accesorio' + p.numero;
+        
+        return nombreMatch || numMatch || categoriaMatch || busquedaGenerica;
+      });
+
+      if (filtrados.length > 0) {
+        resultados.innerHTML = filtrados.map(p => {
+          // Icono según categoría
+          const icono = p.categoria === 'neumaticos' ? '🛞' : p.categoria === 'candados' ? '🔒' : '⚡';
+          
+          return `
+            <div style="padding:0.8rem 1rem; border-bottom:1px solid #333; cursor:pointer; transition:0.2s;" 
+                 onclick="window.open('${p.link}','_blank')"
+                 onmouseover="this.style.background='#2a2a2a'"
+                 onmouseout="this.style.background='transparent'">
+              <div style="display:flex; align-items:center; gap:1rem;">
+                <span style="color:#00bfff; font-size:1.2rem;">${icono}</span>
+                <div style="flex:1;">
+                  <div style="font-weight:500;">${p.nombre}</div>
+                  <div style="display:flex; gap:1rem; font-size:0.8rem; color:#888;">
+                    <span>📁 ${p.categoria}</span>
+                    <span>🔢 ${p.numero}</span>
+                  </div>
+                </div>
+                <span style="color:#00bfff; font-size:0.9rem;">Ver →</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+        resultados.style.display = 'block';
+      } else {
+        resultados.innerHTML = `
+          <div style="padding:2rem; text-align:center;">
+            <div style="font-size:2rem; margin-bottom:0.5rem;">😕</div>
+            <div style="color:#888;">No encontramos "${texto}"</div>
+            <div style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Prueba con: 7, tubeless, cityroad...</div>
+          </div>
+        `;
+        resultados.style.display = 'block';
+      }
+    });
+
+    // Cerrar al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.buscador-container')) {
+        resultados.style.display = 'none';
+      }
+    });
+
+    // Atajo de teclado: ESC para cerrar
+    buscador.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        resultados.style.display = 'none';
+        buscador.blur();
+      }
+    });
+  });
+</script>
+
+<!-- CONTENIDO PRINCIPAL: SOLO CAMBIA SEGÚN PESTAÑA -->
+<main>
+  <!-- SECCIÓN INICIO (PRESENTACIÓN) -->
+  <div id="inicio" class="seccion activa">
+    <div class="content-card">
+      <h2 style="color:#00bfff; font-size:2rem; margin-bottom:1rem;">Bienvenido a Y&R</h2>
+      <p style="font-size:1.2rem; margin-bottom:1.5rem;">Somos tu taller de confianza en Sevilla para patines eléctricos. Más de 10 años de experiencia nos avalan.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+        <div>
+          <h3 style="color:#00bfff;">🔧 ¿Qué hacemos?</h3>
+          <ul style="list-style:none; margin-top:1rem;">
+            <li>✓ Mantenimiento general</li>
+            <li>✓ Reparación de pinchazos</li>
+            <li>✓ Cambio de neumáticos</li>
+            <li>✓ Baterías y electricidad</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:#00bfff;">⭐ Por qué elegirnos</h3>
+          <ul style="list-style:none; margin-top:1rem;">
+            <li>✓ Profesionales certificados</li>
+            <li>✓ Reparación en el día</li>
+            <li>✓ Presupuesto sin compromiso</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEUMÁTICOS -->
+  <div id="neumaticos" class="seccion">
+    <div class="content-card">
+      <h2 style="color:#00bfff; margin-bottom:1.5rem;">🔧 Neumáticos disponibles</h2>
+      <div class="productos-grid">
+        <div class="producto-card"><img src="img/neumaticos/neumatico1.jpeg"><h3>Tubeless Cityroad 60/70-6,5</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20el%20neumatico%20Tubeless%20Cityroad%2060/70-6,5">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico2.jpeg"><h3>Tubeless Cityroad 10x2,70</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20el%20neumatico%2010x2,70">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico3.jpeg"><h3>Innova 60/70-6,5</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20el%20neumatico%20Innova">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico4.jpeg"><h3>Tubeless 10"</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20el%20neumatico%20tubeless%2010">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico5.jpeg"><h3>Rueda maciza 10x2,5</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%2010x2,5">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico6.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico7.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico8.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico9.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico10.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico11.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico12.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico13.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico14.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico15.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico16.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico17.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico18.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico19.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico20.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico21.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico22.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico23.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico24.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico25.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico26.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico27.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico28.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico29.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico30.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+        <div class="producto-card"><img src="img/neumaticos/neumatico31.jpeg"><h3>Sin nombre</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20rueda%20maciza%208">Consultar</a></div>
+
+        
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CANDADOS -->
+  <div id="candados" class="seccion">
+    <div class="content-card">
+      <h2 style="color:#00bfff; margin-bottom:1.5rem;">🔒 Candados y seguridad</h2>
+      <div class="productos-grid">
+        <div class="producto-card"><img src="img/candados/candado1.jpeg"><h3>U-Lock alta seguridad</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20el%20candado%20U-Lock">Consultar</a></div>
+        <div class="producto-card"><img src="img/candados/candado2.jpeg"><h3>Candado antirrobo en U</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20el%20candado%20antirrobo">Consultar</a></div>
+        <div class="producto-card"><img src="img/candados/candado3.jpeg"><h3>Cadena con combinación</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20la%20cadena%20con%20combinacion">Consultar</a></div>
+        <div class="producto-card"><img src="img/candados/candado4.jpeg"><h3>Candado de disco</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20el%20candado%20de%20disco">Consultar</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCESORIOS -->
+  <div id="accesorios" class="seccion">
+    <div class="content-card">
+      <h2 style="color:#00bfff; margin-bottom:1.5rem;">⚡ Accesorios</h2>
+      <div class="productos-grid">
+        <div class="producto-card"><img src="img/accesorios/accesorio1.jpeg"><h3>Casco NAVEE</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20el%20casco%20NAVEE">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio2.jpeg"><h3>Puños azules</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20puños%20azules">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio5.jpeg"><h3>Bolso impermeable</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesa%20el%20bolso">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio6.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio7.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio8.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio9.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio10.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio11.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio12.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio13.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio14.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio15.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio16.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio17.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio18.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>  
+        <div class="producto-card"><img src="img/accesorios/accesorio19.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio20.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio21.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio22.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio23.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio24.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio25.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio26.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio27.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio28.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio29.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio30.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+        <div class="producto-card"><img src="img/accesorios/accesorio31.jpeg"><h3>Aun no disponible</h3><a href="https://wa.me/34640846390?text=Hola%20me%20interesan%20los%20guantes%20de%20ciclismo">Consultar</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TALLER (UBICACIÓN + HORARIO + FOTOS) -->
+  <div id="taller" class="seccion">
+    <div class="content-card">
+      <h2 style="color:#00bfff; margin-bottom:1.5rem;">📍 Nuestro taller</h2>
+      <div class="taller-grid">
+        <div>
+          <div class="info-block">
+            <h3>Dirección</h3>
+            <p>Calle Madreselva, 10, Bajo derecha<br>41008 Sevilla</p>
+          </div>
+          <div class="info-block" style="margin-top:1rem;">
+            <h3>Horario</h3>
+            <p>Lun–Sáb: 9:00–14:00 · 17:00–21:00<br>Domingo: cerrado</p>
+          </div>
+        </div>
+        <div>
+          <div class="info-block">
+            <h3>Así trabajamos</h3>
+            <div class="fotos-grid">
+              <img src="https://placehold.co/400x300/1a1a1a/00bfff?text=Taller+1" alt="Taller">
+              <img src="https://placehold.co/400x300/1a1a1a/00bfff?text=Taller+2" alt="Reparación">
+              <img src="https://placehold.co/400x300/1a1a1a/00bfff?text=Equipo" alt="Equipo">
+              <img src="https://placehold.co/400x300/1a1a1a/00bfff?text=Clientes" alt="Clientes">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+<!-- SECCIÓN REDES SOCIALES -->
+<div id="redes" class="seccion">
+  <div class="content-card">
+    <h2 style="color:#00bfff; margin-bottom:1.5rem;">📱 Redes sociales</h2>
+    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+      
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@chiriaraikol" target="_blank" style="text-decoration: none; width: 100%;">
+        <div style="background: #1f1f1f; border: 2px solid #00bfff; border-radius: 60px; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; transition: 0.2s;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 1.8rem;">🎵</span>
+            <span style="font-weight: 500;">TikTok</span>
+          </div>
+          <span style="color: #00bfff;">@chiriaraikol →</span>
+        </div>
+      </a>
+      
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/raikolcordova" target="_blank" style="text-decoration: none; width: 100%;">
+        <div style="background: #1f1f1f; border: 2px solid #00bfff; border-radius: 60px; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; transition: 0.2s;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 1.8rem;">📷</span>
+            <span style="font-weight: 500;">Instagram</span>
+          </div>
+          <span style="color: #00bfff;">@raikolcordova →</span>
+        </div>
+      </a>
+      
+    </div>
+  </div>
+</div>
+
+</main>
+
+
+<!-- SECCIÓN COMPARTIR (SIEMPRE VISIBLE) -->
+<div class="share-section">
+  <div class="share-box">
+    <span>📲 Comparte esta página con quien tenga patín</span>
+    <div style="display:flex; gap:0.8rem;">
+      <span style="color:#aaa;">https://innominatus2.github.io/Taller-Y-R/</span>
+      <button class="btn-copiar" id="btn-copiar">Copiar</button>
+    </div>
+    <p id="mensaje-copiado" style="color:#00bfff; font-size:0.9rem;"></p>
+  </div>
+</div>
+
+
+<footer>
+  Taller Y & R © 2026 · Reparación de patines en Sevilla
+</footer>
+
+<!-- BOTONES FLOTANTES -->
+<div class="floating-actions">
+  <a href="https://wa.me/34640846390?text=Hola%20quiero%20consultar%20sobre%20el%20taller" class="float-btn whatsapp" target="_blank">📱</a>
+  <button class="float-btn" id="theme-toggle">🌙</button>
+</div>
+
+<!-- MODAL LOGO -->
+<div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; z-index:1000;" onclick="this.style.display='none'">
+  <img id="modal-img" src="" style="max-width:90%; max-height:90%; border-radius:20px;">
+</div>
+
+<script>
+  // ===== SISTEMA DE PESTAÑAS =====
+  const tabs = document.querySelectorAll('.tab');
+  const secciones = document.querySelectorAll('.seccion');
+
+  function cambiarSeccion(seccionId) {
+    // Ocultar todas
+    secciones.forEach(s => s.classList.remove('activa'));
+    // Mostrar la seleccionada
+    document.getElementById(seccionId).classList.add('activa');
+    // Quitar activo de todos los tabs
+    tabs.forEach(t => t.classList.remove('activo'));
+    // Poner activo al tab que corresponda (se hará en el evento)
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const seccion = tab.dataset.seccion;
+      cambiarSeccion(seccion);
+      tab.classList.add('activo');
+    });
+  });
+
+  // ===== TEMA CLARO/OSCURO BIEN INTEGRADO =====
+  const body = document.body;
+  const themeBtn = document.getElementById('theme-toggle');
+  const savedTheme = localStorage.getItem('theme');
+
+  if (savedTheme === 'light') {
+    body.classList.add('light-mode');
+    themeBtn.textContent = '☀️';
+  } else {
+    themeBtn.textContent = '🌙';
+  }
+
+  themeBtn.addEventListener('click', () => {
+    body.classList.toggle('light-mode');
+    const isLight = body.classList.contains('light-mode');
+    themeBtn.textContent = isLight ? '☀️' : '🌙';
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  });
+
+  // ===== MODAL LOGO =====
+  const logo = document.getElementById('logo-img');
+  const modal = document.getElementById('modal');
+  const modalImg = document.getElementById('modal-img');
+  logo.addEventListener('click', () => {
+    modalImg.src = logo.src;
+    modal.style.display = 'flex';
+  });
+
+  // ===== COPIAR ENLACE =====
+  document.getElementById('btn-copiar').addEventListener('click', () => {
+    const enlace = 'https://innominatus2.github.io/Taller-Y-R/';
+    navigator.clipboard.writeText(enlace).then(() => {
+      const msg = document.getElementById('mensaje-copiado');
+      msg.textContent = '✅ Enlace copiado';
+      setTimeout(() => msg.textContent = '', 2000);
+    });
+  });
+  
+</script>
+
+
+
+
+</body>
+</html>
