@@ -951,6 +951,84 @@
   
 </script>
 
+<script>
+// ===== MODAL PARA IMÁGENES DE PRODUCTOS =====
+function crearModalImagen() {
+  // Verificar si ya existe el modal
+  if (document.getElementById('modal-producto')) return;
+  
+  // Crear estructura del modal
+  const modalProducto = document.createElement('div');
+  modalProducto.id = 'modal-producto';
+  modalProducto.style.cssText = `
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    cursor: pointer;
+  `;
+  
+  const imgModal = document.createElement('img');
+  imgModal.id = 'modal-producto-img';
+  imgModal.style.cssText = `
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0,191,255,0.3);
+  `;
+  
+  modalProducto.appendChild(imgModal);
+  document.body.appendChild(modalProducto);
+  
+  // Cerrar al hacer clic
+  modalProducto.addEventListener('click', () => {
+    modalProducto.style.display = 'none';
+  });
+  
+  // Cerrar con tecla ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalProducto.style.display === 'flex') {
+      modalProducto.style.display = 'none';
+    }
+  });
+  
+  return modalProducto;
+}
+
+// Inicializar modal
+const modalProducto = crearModalImagen();
+
+// Agregar evento a todas las imágenes de productos
+document.querySelectorAll('.producto-card img').forEach(img => {
+  img.addEventListener('click', (e) => {
+    e.stopPropagation(); // Evitar que el click se propague
+    const modalImg = document.getElementById('modal-producto-img');
+    if (modalImg && modalProducto) {
+      modalImg.src = img.src;
+      modalProducto.style.display = 'flex';
+    }
+  });
+  
+  // Cambiar cursor para indicar que es clickeable
+  img.style.cursor = 'pointer';
+  img.style.transition = 'transform 0.2s';
+  
+  // Efecto hover sutil
+  img.addEventListener('mouseenter', () => {
+    img.style.transform = 'scale(1.02)';
+  });
+  img.addEventListener('mouseleave', () => {
+    img.style.transform = 'scale(1)';
+  });
+});
+</script>
 
 
 
