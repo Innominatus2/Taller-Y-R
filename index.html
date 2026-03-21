@@ -52,6 +52,212 @@
       border-top-color: #e2e8f0;
       color: #64748b;
     }
+    body.light-mode #resultadosGlobal {
+      background: white;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    /* Asegurar que los bordes internos también cambien */
+    body.light-mode #resultadosGlobal > div > div {
+      border-bottom-color: #e2e8f0 !important;
+    }
+
+    body.light-mode #resultadosGlobal div[style*="border-bottom"] {
+      border-bottom-color: #e2e8f0 !important;
+    }
+   
+
+    body.light-mode .buscador-container div:first-child {
+      background: white !important;
+      border-color: #00bfff !important;
+    }
+
+    body.light-mode #buscadorGlobal {
+      color: #1e293b;
+    }
+
+    body.light-mode #buscadorGlobal::placeholder {
+      color: #94a3b8;
+    }
+    
+    body.light-mode input,
+    body.light-mode select,
+    body.light-mode textarea {
+      background: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+      color: #1e293b !important;
+    }
+
+    body.light-mode input:focus,
+    body.light-mode select:focus,
+    body.light-mode textarea:focus {
+      outline: none;
+      border-color: #00bfff !important;
+    }
+        /* Modo claro para tarjetas de productos y contenido general */
+    body.light-mode .producto-card {
+      background: white;
+      border-color: #e2e8f0;
+    }
+    
+    body.light-mode .producto-card h3 {
+      color: #00bfff;
+    }
+    
+    body.light-mode .info-block {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+    
+    body.light-mode .share-box {
+      background: white;
+      border-color: #e2e8f0;
+    }
+    
+    body.light-mode .share-box span {
+      color: #00bfff;
+    }
+    
+    body.light-mode .btn-copiar {
+      background: #00bfff;
+      color: #0a0a0a;
+    }
+    
+    /* Para el formulario de presupuesto (aunque ya funciona, por si acaso) */
+    body.light-mode #formPresupuesto input,
+    body.light-mode #formPresupuesto select,
+    body.light-mode #formPresupuesto textarea {
+      background: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+      color: #1e293b !important;
+    }
+    
+    body.light-mode #formPresupuesto input:focus,
+    body.light-mode #formPresupuesto select:focus,
+    body.light-mode #formPresupuesto textarea:focus {
+      border-color: #00bfff !important;
+      outline: none;
+    }
+    
+    /* Para los botones flotantes en modo claro */
+    body.light-mode .float-btn {
+      background: #00bfff;
+      color: #0a0a0a;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    body.light-mode .float-btn.whatsapp {
+      background: #25D366;
+      color: white;
+    }
+    
+    /* Para el modal en modo claro */
+    body.light-mode #modal,
+    body.light-mode #modal-producto {
+      background: rgba(255,255,255,0.95) !important;
+    }
+    
+    /* Para el contenedor de resultados del buscador en modo claro */
+    body.light-mode #resultadosGlobal div {
+      color: #1e293b;
+    }
+    
+    body.light-mode #resultadosGlobal div div {
+      color: #888;
+    }
+
+        /* Modo claro para la sección de redes sociales */
+    body.light-mode #redes .content-card {
+      background: white;
+      border-color: #e2e8f0;
+    }
+    
+    body.light-mode #redes a div {
+      background: #f1f5f9 !important;
+      border-color: #00bfff !important;
+    }
+    
+    body.light-mode #redes a div:hover {
+      background: #e2e8f0 !important;
+    }
+    
+    body.light-mode #redes a div span:first-child {
+      color: #1e293b;
+    }
+    
+    body.light-mode #redes a div span:last-child {
+      color: #00bfff;
+    }
+    
+    /* También para los enlaces de las redes sociales dentro del content-card */
+    body.light-mode #redes .content-card a div {
+      background: #f1f5f9;
+    }
+    
+    body.light-mode #redes .content-card a div span {
+      color: #1e293b;
+    }
+    
+    body.light-mode #redes .content-card a div span:last-child {
+      color: #00bfff;
+    }
+    /* Modo claro para el título del header */
+    body.light-mode .header-text h1 {
+      background: linear-gradient(to right, #00bfff, #0077aa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    
+    body.light-mode .header-text p {
+      color: #64748b;
+    }
+    /* Modo claro para los resultados del buscador */
+    body.light-mode #resultadosGlobal div[style*="border-bottom"] {
+      border-bottom-color: #e2e8f0 !important;
+    }
+    
+    body.light-mode #resultadosGlobal > div > div {
+      border-bottom: 1px solid #e2e8f0 !important;
+    }
+    
+    /* Para los resultados individuales */
+    body.light-mode .resultado-item {
+      border-bottom: 1px solid #e2e8f0 !important;
+    }
+    
+    /* Mejorar contraste del texto en resultados */
+    body.light-mode #resultadosGlobal div[style*="color: #888"] {
+      color: #64748b !important;
+    }
+
+        /* Borde del contenedor de resultados según tema */
+    body.light-mode .resultados-container {
+      border: 1px solid #e2e8f0 !important;
+    }
+    
+    body:not(.light-mode) .resultados-container {
+      border: 1px solid #333 !important;
+    }
+    
+    /* Asegurar que los bordes internos también cambien */
+    body.light-mode #resultadosGlobal > div > div {
+      border-bottom-color: #e2e8f0 !important;
+    }
+    
+    body.light-mode #resultadosGlobal div[style*="border-bottom"] {
+      border-bottom-color: #e2e8f0 !important;
+    }
+    
+    /* Hover para los resultados en modo claro */
+    body.light-mode #resultadosGlobal div[onclick] {
+      background: transparent;
+    }
+    
+    body.light-mode #resultadosGlobal div[onclick]:hover {
+      background: #e2e8f0 !important;
+    }
 
     /* ===== HEADER FIJO ===== */
     .header {
@@ -180,6 +386,11 @@
     .producto-card:hover {
       border-color: #00bfff;
       transform: translateY(-4px);
+      background: rgba(0,191,255,0.05);
+    }
+    /* Hover para modo claro en productos */
+      body.light-mode .producto-card:hover {
+      background: rgba(0,191,255,0.08);
     }
     .producto-card img {
       width: 100%;
@@ -459,7 +670,29 @@
     padding: 1rem;
     font-size: 0.8rem;
   }
+
+      /* Estilos para los resultados del buscador (ambos temas) */
+    .resultado-item {
+      border-bottom-color: #333;
+    }
+    
+    .resultado-item:hover {
+      background: #2a2a2a;
+    }
+    
+    body.light-mode .resultado-item {
+      border-bottom-color: #e2e8f0;
+    }
+    
+    body.light-mode .resultado-item:hover {
+      background: #e2e8f0;
+    }
+    body.light-mode .producto-card:hover {
+      background: rgba(0,191,255,0.08);
 }
+}
+
+
 
 /* Ajuste para pantallas muy pequeñas */
 @media (max-width: 380px) {
@@ -520,6 +753,7 @@
     <button class="tab" data-seccion="neumaticos">🔧 Neumáticos</button>
     <button class="tab" data-seccion="candados">🔒 Candados</button>
     <button class="tab" data-seccion="accesorios">⚡ Accesorios</button>
+    <button class="tab" data-seccion="presupuesto">📝 Presupuesto</button>
     <button class="tab" data-seccion="taller">📍 Taller</button>
     <button class="tab" data-seccion="redes">📱 Redes sociales</button>
   </div>
@@ -534,7 +768,8 @@
   </div>
   
   <!-- RESULTADOS -->
-  <div id="resultadosGlobal" style="position:absolute; top:100%; left:2rem; right:2rem; background:#1f1f1f; border-radius:20px; margin-top:0.5rem; max-height:400px; overflow-y:auto; display:none; z-index:1000; border:1px solid #333; box-shadow:0 10px 30px rgba(0,0,0,0.5);"></div>
+  <div id="resultadosGlobal" class="resultados-container" style="position:absolute; top:100%; left:2rem; right:2rem; background:#1f1f1f; border-radius:20px; margin-top:0.5rem; max-height:400px; overflow-y:auto; display:none; z-index:1000; box-shadow:0 10px 30px rgba(0,0,0,0.5);"></div>
+  
 </div>
 
 <!-- SCRIPT DEL BUSCADOR (una sola vez) -->
@@ -547,17 +782,14 @@
     function escanearProductos() {
       const productos = [];
       
-      // Buscar en TODAS las categorías (aunque estén ocultas)
       document.querySelectorAll('.producto-card').forEach((card, index) => {
         const img = card.querySelector('img');
         const nombre = card.querySelector('h3')?.textContent.trim() || 'Sin nombre';
         const link = card.querySelector('a')?.href;
         
-        // Detectar categoría por el padre o por la imagen
         let categoria = 'desconocida';
         let imgNum = '?';
         
-        // Intentar extraer número y categoría de la ruta de la imagen
         if (img && img.src) {
           const matchNeumatico = img.src.match(/neumaticos?[\/\\]neumatico(\d+)\./i);
           const matchCandado = img.src.match(/candados?[\/\\]candado(\d+)\./i);
@@ -591,6 +823,16 @@
     const todosProductos = escanearProductos();
     console.log(`📦 Buscador cargado: ${todosProductos.length} productos`);
 
+    // Función para obtener el color de hover según el tema
+    function getHoverColor() {
+      return document.body.classList.contains('light-mode') ? '#e2e8f0' : '#2a2a2a';
+    }
+    
+    function getBorderColor() {
+      return document.body.classList.contains('light-mode') ? '#e2e8f0' : '#333';
+    }
+
+    // EVENTO PRINCIPAL DE BÚSQUEDA
     buscador.addEventListener('input', (e) => {
       const texto = e.target.value.toLowerCase().trim();
       
@@ -611,20 +853,30 @@
         return nombreMatch || numMatch || categoriaMatch || busquedaGenerica;
       });
 
+      const hoverColor = getHoverColor();
+      const borderColor = getBorderColor();
+
+      // También actualizar el color de hover en los elementos dinámicos
+      const hoverBgColor = document.body.classList.contains('light-mode') ? '#e2e8f0' : '#2a2a2a';
+
       if (filtrados.length > 0) {
         resultados.innerHTML = filtrados.map(p => {
-          // Icono según categoría
+          const nombreResaltado = p.nombre.replace(
+            new RegExp(`(${texto})`, 'gi'),
+            '<span style="background:#00bfff20; color:#00bfff;">$1</span>'
+          );
+          
           const icono = p.categoria === 'neumaticos' ? '🛞' : p.categoria === 'candados' ? '🔒' : '⚡';
           
           return `
-            <div style="padding:0.8rem 1rem; border-bottom:1px solid #333; cursor:pointer; transition:0.2s;" 
-                 onclick="window.open('${p.link}','_blank')"
-                 onmouseover="this.style.background='#2a2a2a'"
+            <div style="padding:0.8rem 1rem; border-bottom:1px solid ${borderColor}; cursor:pointer; transition:0.2s;" 
+                 onclick="cambiarAPestanaYScroll('${p.categoria}', '${p.id}')"
+                 onmouseover="this.style.background='${hoverBgColor}'"
                  onmouseout="this.style.background='transparent'">
               <div style="display:flex; align-items:center; gap:1rem;">
                 <span style="color:#00bfff; font-size:1.2rem;">${icono}</span>
                 <div style="flex:1;">
-                  <div style="font-weight:500;">${p.nombre}</div>
+                  <div style="font-weight:500;">${nombreResaltado}</div>
                   <div style="display:flex; gap:1rem; font-size:0.8rem; color:#888;">
                     <span>📁 ${p.categoria}</span>
                     <span>🔢 ${p.numero}</span>
@@ -648,6 +900,18 @@
       }
     });
 
+    // Escuchar cambios de tema para actualizar colores en resultados existentes
+    const themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function() {
+        // Forzar actualización de resultados si están visibles
+        if (resultados.style.display === 'block' && buscador.value.length >= 2) {
+          const event = new Event('input');
+          buscador.dispatchEvent(event);
+        }
+      });
+    }
+
     // Cerrar al hacer clic fuera
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.buscador-container')) {
@@ -662,6 +926,7 @@
         buscador.blur();
       }
     });
+    
   });
 </script>
 
@@ -694,7 +959,9 @@
     </div>
   </div>
 
-  <!-- NEUMÁTICOS -->
+ 
+
+<!-- NEUMÁTICOS -->
   <div id="neumaticos" class="seccion">
     <div class="content-card">
       <h2 style="color:#00bfff; margin-bottom:1.5rem;">🔧 Neumáticos disponibles</h2>
@@ -809,20 +1076,10 @@
             <p>Lun–Sáb: 9:00–14:00 · 17:00–21:00<br>Domingo: cerrado</p>
           </div>
         </div>
-        <div>
-          <div class="info-block">
-            <h3>Así trabajamos</h3>
-            <div class="fotos-grid">
-              <img src="https://placehold.co/400x300/1a1a1a/00bfff?text=Taller+1" alt="Taller">
-              <img src="https://placehold.co/400x300/1a1a1a/00bfff?text=Reparación" alt="Reparación">
-              <img src="https://placehold.co/400x300/1a1a1a/00bfff?text=Equipo" alt="Equipo">
-              <img src="https://placehold.co/400x300/1a1a1a/00bfff?text=Clientes" alt="Clientes">
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
+      
 
   
 <!-- SECCIÓN REDES SOCIALES -->
@@ -853,6 +1110,71 @@
         </div>
       </a>
       
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN PRESUPUESTO -->
+<div id="presupuesto" class="seccion">
+  <div class="content-card">
+    <h2 style="color:#00bfff; margin-bottom:0.5rem;">📝 Solicita tu presupuesto</h2>
+    <p style="margin-bottom:1.5rem; color:#888;">Cuéntanos qué necesitas y te responderemos lo antes posible</p>
+    
+    <form id="formPresupuesto" style="display: flex; flex-direction: column; gap: 1.2rem;">
+      <!-- Nombre -->
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">👤 Nombre completo *</label>
+        <input type="text" id="presupuesto_nombre" required style="width: 100%; padding: 0.8rem 1rem; background: #1f1f1f; border: 1px solid #333; border-radius: 12px; color: white; font-size: 1rem;">
+      </div>
+      
+      <!-- Teléfono -->
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">📞 Teléfono *</label>
+        <input type="tel" id="presupuesto_telefono" required style="width: 100%; padding: 0.8rem 1rem; background: #1f1f1f; border: 1px solid #333; border-radius: 12px; color: white; font-size: 1rem;">
+      </div>
+      
+      <!-- Email -->
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">✉️ Email *</label>
+        <input type="email" id="presupuesto_email" required style="width: 100%; padding: 0.8rem 1rem; background: #1f1f1f; border: 1px solid #333; border-radius: 12px; color: white; font-size: 1rem;">
+      </div>
+      
+      <!-- Modelo de patín -->
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">🛴 Modelo de patín</label>
+        <input type="text" id="presupuesto_modelo" placeholder="Ej: Xiaomi Mi 3, Ninebot Max, etc." style="width: 100%; padding: 0.8rem 1rem; background: #1f1f1f; border: 1px solid #333; border-radius: 12px; color: white; font-size: 1rem;">
+      </div>
+      
+      <!-- Tipo de servicio -->
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">🔧 Tipo de servicio *</label>
+        <select id="presupuesto_servicio" required style="width: 100%; padding: 0.8rem 1rem; background: #1f1f1f; border: 1px solid #333; border-radius: 12px; color: white; font-size: 1rem;">
+          <option value="">Selecciona una opción</option>
+          <option value="reparacion_pinchazo">Reparación de pinchazo</option>
+          <option value="cambio_neumatico">Cambio de neumático</option>
+          <option value="revision_general">Revisión general</option>
+          <option value="problema_bateria">Problema con batería</option>
+          <option value="problema_motor">Problema con motor</option>
+          <option value="accesorio">Compra de accesorio</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      
+      <!-- Mensaje -->
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">💬 Descripción del problema o necesidad</label>
+        <textarea id="presupuesto_mensaje" rows="4" placeholder="Cuéntanos con detalle qué necesitas..." style="width: 100%; padding: 0.8rem 1rem; background: #1f1f1f; border: 1px solid #333; border-radius: 12px; color: white; font-size: 1rem; resize: vertical;"></textarea>
+      </div>
+      
+      <!-- Botón enviar -->
+      <button type="submit" style="background: #00bfff; border: none; padding: 1rem; border-radius: 40px; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 0.5rem; transition: 0.2s;">📩 Enviar solicitud</button>
+      
+      <p id="presupuesto_mensaje_confirmacion" style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem;"></p>
+    </form>
+    
+    <!-- Nota informativa -->
+    <div style="margin-top: 1.5rem; padding: 1rem; background: #00bfff10; border-radius: 12px; border-left: 3px solid #00bfff;">
+      <p style="font-size: 0.85rem; color: #888;">📌 Recibirás una respuesta por WhatsApp en menos de 24h. Tu información solo se usará para contactarte.</p>
     </div>
   </div>
 </div>
@@ -910,6 +1232,40 @@
       tab.classList.add('activo');
     });
   });
+
+  // AÑADIR DESPUÉS de la función cambiarSeccion
+function cambiarAPestanaYScroll(categoria, productId) {
+  // Cambiar a la pestaña correspondiente
+  cambiarSeccion(categoria);
+  
+  // Activar visualmente el tab correcto
+  tabs.forEach(tab => {
+    if (tab.dataset.seccion === categoria) {
+      tab.classList.add('activo');
+    } else {
+      tab.classList.remove('activo');
+    }
+  });
+  
+  // Esperar un momento a que la sección se muestre
+  setTimeout(() => {
+    // Buscar el producto por su ID (necesitamos añadir IDs a los productos)
+    const producto = document.getElementById(productId);
+    if (producto) {
+      producto.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Añadir un efecto de resaltado temporal
+      producto.style.transition = 'background 0.3s';
+      producto.style.background = '#00bfff30';
+      setTimeout(() => {
+        producto.style.background = '';
+      }, 1500);
+    }
+  }, 100);
+  
+  // Cerrar el buscador
+  document.getElementById('resultadosGlobal').style.display = 'none';
+  document.getElementById('buscadorGlobal').value = '';
+}
 
   // ===== TEMA CLARO/OSCURO BIEN INTEGRADO =====
   const body = document.body;
@@ -1030,6 +1386,91 @@ document.querySelectorAll('.producto-card img').forEach(img => {
 });
 </script>
 
+<script>
+// Asignar IDs automáticamente a todos los productos
+document.addEventListener('DOMContentLoaded', function() {
+  const productos = document.querySelectorAll('.producto-card');
+  productos.forEach((producto, index) => {
+    if (!producto.id) {
+      // Intentar detectar categoría por la imagen
+      const img = producto.querySelector('img');
+      let categoria = 'producto';
+      let numero = index + 1;
+      
+      if (img && img.src) {
+        if (img.src.includes('neumaticos')) categoria = 'neumaticos';
+        else if (img.src.includes('candados')) categoria = 'candados';
+        else if (img.src.includes('accesorios')) categoria = 'accesorios';
+        
+        // Extraer número del nombre del archivo si es posible
+        const match = img.src.match(/(\d+)/);
+        if (match) numero = match[1];
+      }
+      
+      producto.id = `prod-${categoria}-${numero}-${index}`;
+    }
+  });
+});
+</script>
+
+<script>
+// ===== FORMULARIO DE PRESUPUESTO =====
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('formPresupuesto');
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Recoger datos
+      const nombre = document.getElementById('presupuesto_nombre').value.trim();
+      const telefono = document.getElementById('presupuesto_telefono').value.trim();
+      const email = document.getElementById('presupuesto_email').value.trim();
+      const modelo = document.getElementById('presupuesto_modelo').value.trim();
+      const servicioSelect = document.getElementById('presupuesto_servicio');
+      const servicio = servicioSelect.options[servicioSelect.selectedIndex]?.text || '';
+      const mensaje = document.getElementById('presupuesto_mensaje').value.trim();
+      
+      const confirmacion = document.getElementById('presupuesto_mensaje_confirmacion');
+      
+      // Validaciones básicas
+      if (!nombre || !telefono || !email) {
+        confirmacion.style.color = '#ff6b6b';
+        confirmacion.textContent = '❌ Por favor completa los campos obligatorios';
+        setTimeout(() => confirmacion.textContent = '', 3000);
+        return;
+      }
+      
+      if (!servicioSelect.value) {
+        confirmacion.style.color = '#ff6b6b';
+        confirmacion.textContent = '❌ Por favor selecciona un tipo de servicio';
+        setTimeout(() => confirmacion.textContent = '', 3000);
+        return;
+      }
+      
+      // Construir mensaje para WhatsApp
+      const textoWhatsapp = `*NUEVA SOLICITUD DE PRESUPUESTO*%0A%0A*Nombre:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Modelo:* ${modelo || 'No especificado'}%0A*Servicio:* ${servicio}%0A*Mensaje:* ${mensaje || 'Sin detalles adicionales'}%0A%0A---%0ASolicitud enviada desde la web`;
+      
+      const numeroWhatsapp = '34640846390';
+      const url = `https://wa.me/${numeroWhatsapp}?text=${textoWhatsapp}`;
+      
+      // Abrir WhatsApp
+      window.open(url, '_blank');
+      
+      // Mostrar confirmación
+      confirmacion.style.color = '#00bfff';
+      confirmacion.textContent = '✅ ¡Solicitud enviada! Te contactaremos por WhatsApp.';
+      
+      // Limpiar formulario
+      form.reset();
+      
+      // Ocultar mensaje después de 5 segundos
+      setTimeout(() => {
+        confirmacion.textContent = '';
+      }, 5000);
+    });
+  }
+});
+</script>
 
 
 </body>
