@@ -733,20 +733,13 @@
 
 /* Indicador sutil de que hay más pestañas */
 @media (max-width: 600px) {
-  .tab-container::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 30px;
-    background: linear-gradient(to right, transparent, rgba(0,191,255,0.1));
-    pointer-events: none;
-    border-radius: 0 12px 12px 0;
+  .tab-container {
+    /* Sombra solo en los bordes que indica scroll */
+    box-shadow: inset -10px 0 8px -8px rgba(0,191,255,0.2);
   }
   
-  body.light-mode .tab-container::after {
-    background: linear-gradient(to right, transparent, rgba(0,191,255,0.05));
+  body.light-mode .tab-container {
+    box-shadow: inset -10px 0 8px -8px rgba(0,0,0,0.1);
   }
 }
 
