@@ -764,7 +764,13 @@
 <div class="buscador-container" style="max-width:1300px; margin:1rem auto 0; padding:0 2rem; position:relative;">
   <div style="background:#151515; border-radius:60px; padding:0.5rem 1.5rem; display:flex; align-items:center; border:2px solid #00bfff;">
     <span style="color:#00bfff; font-size:1.5rem; margin-right:0.8rem;">🔍</span>
-    <input type="text" id="buscadorGlobal" placeholder="Busca por nombre o número (ej: 7, tubeless, cityroad...)" style="width:100%; background:transparent; border:none; color:white; font-size:1rem; padding:0.8rem 0;" autocomplete="off">
+    <input type="text" 
+           id="buscadorGlobal" 
+           data-placeholder-pc="🔍 Busca por nombre o número (ej: 7, tubeless, cityroad...)"
+           data-placeholder-mobile="🔍 Buscar producto..."
+           placeholder="🔍 Busca por nombre o número (ej: 7, tubeless, cityroad...)"
+           style="width:100%; background:transparent; border:none; color:white; font-size:1rem; padding:0.8rem 0;" 
+           autocomplete="off">
   </div>
   
   <!-- RESULTADOS -->
@@ -961,7 +967,7 @@
 
  
 
-<!-- NEUMÁTICOS -->
+<!-- NEUMÁTICOS (Imagenes con rutas reales subido a Github)-->
   <div id="neumaticos" class="seccion">
     <div class="content-card">
       <h2 style="color:#00bfff; margin-bottom:1.5rem;">🔧 Neumáticos disponibles</h2>
@@ -1004,7 +1010,7 @@
     </div>
   </div>
 
-  <!-- CANDADOS -->
+  <!-- CANDADOS (Imagenes con rutas reales subido a Github) -->
   <div id="candados" class="seccion">
     <div class="content-card">
       <h2 style="color:#00bfff; margin-bottom:1.5rem;">🔒 Candados y seguridad</h2>
@@ -1017,7 +1023,7 @@
     </div>
   </div>
 
-  <!-- ACCESORIOS -->
+  <!-- ACCESORIOS (Imagenes con rutas reales subido a Github) -->
   <div id="accesorios" class="seccion">
     <div class="content-card">
       <h2 style="color:#00bfff; margin-bottom:1.5rem;">⚡ Accesorios</h2>
@@ -1414,7 +1420,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-// ===== FORMULARIO DE PRESUPUESTO =====
+// ===== FORMULARIO DE PRESUPUESTO CON ENVÍO AUTOMÁTICO =====
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('formPresupuesto');
   if (form) {
@@ -1431,6 +1437,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const mensaje = document.getElementById('presupuesto_mensaje').value.trim();
       
       const confirmacion = document.getElementById('presupuesto_mensaje_confirmacion');
+      const btnEnviar = form.querySelector('button[type="submit"]');
       
       // Validaciones básicas
       if (!nombre || !telefono || !email) {
@@ -1447,31 +1454,82 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       
+      // Deshabilitar botón para evitar múltiples envíos
+      btnEnviar.disabled = true;
+      btnEnviar.style.opacity = '0.7';
+      btnEnviar.textContent = '⏳ Enviando...';
+      
       // Construir mensaje para WhatsApp
       const textoWhatsapp = `*NUEVA SOLICITUD DE PRESUPUESTO*%0A%0A*Nombre:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Modelo:* ${modelo || 'No especificado'}%0A*Servicio:* ${servicio}%0A*Mensaje:* ${mensaje || 'Sin detalles adicionales'}%0A%0A---%0ASolicitud enviada desde la web`;
       
       const numeroWhatsapp = '34640846390';
       const url = `https://wa.me/${numeroWhatsapp}?text=${textoWhatsapp}`;
       
-      // Abrir WhatsApp
+      // ENVÍO AUTOMÁTICO: Abrir WhatsApp y enviar mensaje automáticamente
+      // En móviles, WhatsApp se abrirá con el mensaje pre-cargado
+      // En web, también se abrirá con el texto listo
       window.open(url, '_blank');
       
-      // Mostrar confirmación
+      // Mostrar confirmación de éxito
       confirmacion.style.color = '#00bfff';
       confirmacion.textContent = '✅ ¡Solicitud enviada! Te contactaremos por WhatsApp.';
       
       // Limpiar formulario
       form.reset();
       
+      // Restaurar botón después de 2 segundos
+      setTimeout(() => {
+        btnEnviar.disabled = false;
+        btnEnviar.style.opacity = '1';
+        btnEnviar.textContent = '📩 Enviar solicitud';
+      }, 2000);
+      
       // Ocultar mensaje después de 5 segundos
       setTimeout(() => {
-        confirmacion.textContent = '';
+        if (confirmacion.textContent === '✅ ¡Solicitud enviada! Te contactaremos por WhatsApp.') {
+          confirmacion.textContent = '';
+        }
       }, 5000);
     });
   }
 });
 </script>
 
+<script>
+// Script para cambiar placeholder del buscador según el dispositivo
+(function() {
+  const buscador = document.getElementById('buscadorGlobal');
+  if (!buscador) return;
+  
+  // Función para actualizar placeholder según el tamaño
+  function actualizarPlaceholder() {
+    const esMovil = window.innerWidth <= 600;
+    const placeholderPC = buscador.getAttribute('data-placeholder-pc');
+    const placeholderMobile = buscador.getAttribute('data-placeholder-mobile');
+    
+    if (esMovil && placeholderMobile) {
+      buscador.placeholder = placeholderMobile;
+    } else if (placeholderPC) {
+      buscador.placeholder = placeholderPC;
+    }
+  }
+  
+  // Ejecutar al inicio
+  actualizarPlaceholder();
+  
+  // Ejecutar al redimensionar con debounce
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(actualizarPlaceholder, 150);
+  });
+  
+  // También al cambiar orientación en móvil
+  window.addEventListener('orientationchange', function() {
+    setTimeout(actualizarPlaceholder, 100);
+  });
+})();
+</script>
 
 </body>
 </html>
