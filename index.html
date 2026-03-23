@@ -259,6 +259,15 @@
       background: #e2e8f0 !important;
     }
 
+    /* Modo claro para el scroll de pestañas */
+    body.light-mode .tab-container::-webkit-scrollbar-track {
+      background: #e2e8f0;
+    }
+
+    body.light-mode .tab-container::-webkit-scrollbar-thumb {
+      background: #00bfff;
+    }
+
     /* ===== HEADER FIJO ===== */
     .header {
       background: #111;
@@ -544,22 +553,51 @@
     font-size: 0.9rem;
   }
 
-  /* Pestañas más pequeñas y que no desborden */
-  .tab-container {
-    padding: 0.8rem 1rem;
-  }
-  
-  .tabs {
-    gap: 0.5rem;
-    justify-content: center;
-  }
-  
-  .tab {
-    padding: 0.5rem 1.2rem;
-    font-size: 0.9rem;
-    flex: 1 1 auto;
-    text-align: center;
-  }
+/* Pestañas con scroll horizontal (modo móvil) */
+.tab-container {
+  padding: 0.8rem 0;
+  position: sticky;
+  top: 0;
+  background: rgba(19, 16, 16, 0.98);
+  backdrop-filter: blur(12px);
+  z-index: 99;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* Ocultar scrollbar en Chrome/Safari pero mantener funcionalidad */
+.tab-container::-webkit-scrollbar {
+  height: 3px;
+}
+
+.tab-container::-webkit-scrollbar-track {
+  background: #2a2a2a;
+  border-radius: 10px;
+}
+
+.tab-container::-webkit-scrollbar-thumb {
+  background: #00bfff;
+  border-radius: 10px;
+}
+
+.tabs {
+  gap: 0.6rem;
+  flex-wrap: nowrap; /* ¡Esto evita que se rompan en líneas! */
+  justify-content: flex-start;
+  padding: 0 1rem;
+  min-width: min-content;
+}
+
+.tab {
+  padding: 0.5rem 1.2rem;
+  font-size: 0.85rem;
+  white-space: nowrap; /* Evita que el texto se parta */
+  flex: 0 0 auto; /* No se estiran, mantienen su tamaño */
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
 
   /* Buscador */
   .buscador-container {
@@ -689,10 +727,39 @@
     }
     body.light-mode .producto-card:hover {
       background: rgba(0,191,255,0.08);
+   
 }
 }
 
+/* Indicador sutil de que hay más pestañas */
+@media (max-width: 600px) {
+  .tab-container::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to right, transparent, rgba(0,191,255,0.1));
+    pointer-events: none;
+    border-radius: 0 12px 12px 0;
+  }
+  
+  body.light-mode .tab-container::after {
+    background: linear-gradient(to right, transparent, rgba(0,191,255,0.05));
+  }
+}
 
+/*Para que los botones respondan mejor al tacto */
+@media (max-width: 600px) {
+  .tab {
+    transition: transform 0.1s ease;
+  }
+  
+  .tab:active {
+    transform: scale(0.96);
+  }
+}
 
 /* Ajuste para pantallas muy pequeñas */
 @media (max-width: 380px) {
