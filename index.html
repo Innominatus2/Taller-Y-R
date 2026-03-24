@@ -327,20 +327,6 @@
 }
 
 /* Personalizar la barra de scroll */
-.tab-container::-webkit-scrollbar {
-  height: 3px;
-}
-
-.tab-container::-webkit-scrollbar-track {
-  background: #2a2a2a;
-  border-radius: 10px;
-}
-
-.tab-container::-webkit-scrollbar-thumb {
-  background: #00bfff;
-  border-radius: 10px;
-}
-
 .tabs {
   max-width: 1300px;
   margin: 0 auto;
@@ -544,10 +530,10 @@
       transform: scale(1.1);
     }
     /* ===== MEJORAS MÓVIL ===== */
-@media (max-width: 600px) {
-  /* Header más compacto */
-  .header {
-    padding: 1rem 1rem;
+    @media (max-width: 600px) {
+    /* Header más compacto */
+    .header {
+      padding: 1rem 1rem;
   }
   
   .header-content {
@@ -582,20 +568,6 @@
 }
 
 /* Ocultar scrollbar en Chrome/Safari pero mantener funcionalidad */
-.tab-container::-webkit-scrollbar {
-  height: 3px;
-}
-
-.tab-container::-webkit-scrollbar-track {
-  background: #2a2a2a;
-  border-radius: 10px;
-}
-
-.tab-container::-webkit-scrollbar-thumb {
-  background: #00bfff;
-  border-radius: 10px;
-}
-
 .tabs {
   gap: 0.6rem;
   flex-wrap: nowrap; /* ¡Esto evita que se rompan en líneas! */
@@ -744,6 +716,42 @@
    
 }
 }
+/* ===== BARRA DE SCROLL AZUL PARA LAS PESTAÑAS ===== */
+/* Estilos BASE para todos los dispositivos */
+.tab-container::-webkit-scrollbar {
+  height: 4px; /* Altura de la barra en móvil */
+}
+
+.tab-container::-webkit-scrollbar-track {
+  background: #2a2a2a; /* Fondo del carril */
+  border-radius: 10px;
+}
+
+.tab-container::-webkit-scrollbar-thumb {
+  background: #00bfff; /* ¡LA BARRA AZUL! */
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.tab-container::-webkit-scrollbar-thumb:hover {
+  background: #33ccff; /* Azul más claro al pasar el mouse */
+}
+
+/* MODO PC - Barra MÁS GRANDE (fácil para mouse) */
+@media (min-width: 601px) {
+  .tab-container::-webkit-scrollbar {
+    height: 10px; /* Barra gruesa para PC */
+  }
+}
+
+/* Modo claro (fondo claro) */
+body.light-mode .tab-container::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+body.light-mode .tab-container::-webkit-scrollbar-thumb {
+  background: #00bfff;
+}
 
 /* Indicador sutil de que hay más pestañas */
 @media (max-width: 600px) {
@@ -805,6 +813,104 @@
     background: #2a2a2a;
     transform: translateY(-2px);
 }
+/* ===== BARRA DE SCROLL MÁS GRANDE SOLO PARA PC ===== */
+@media (min-width: 601px) {
+  .tab-container {
+    scrollbar-width: thin; /* Cambia a 'auto' para hacerla más grande en Firefox */
+  }
+  
+  /* Para Chrome, Safari, Edge */
+  .tab-container::-webkit-scrollbar {
+    height: 8px; /* ← Más gruesa que en móvil (3px → 8px) */
+  }
+  
+  .tab-container::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 10px;
+  }
+  
+  .tab-container::-webkit-scrollbar-thumb {
+    background: #00bfff;
+    border-radius: 10px;
+  }
+  
+  /* Hover para la barra - se pone más grande al pasar el mouse */
+  .tab-container::-webkit-scrollbar-thumb:hover {
+    background: #33ccff;
+    height: 10px;
+  }
+}
+
+/* Modo claro para PC */
+@media (min-width: 601px) {
+  body.light-mode .tab-container::-webkit-scrollbar-track {
+    background: #e2e8f0;
+  }
+  
+  body.light-mode .tab-container::-webkit-scrollbar-thumb {
+    background: #00bfff;
+  }
+}
+/* ===== EFECTO AZUL AL HACER CLIC EN BOTONES Y PRODUCTOS ===== */
+/* Efecto para las pestañas cuando se hace clic */
+.tab:active {
+  transform: scale(0.96);
+  background: #00bfff !important;
+  color: #0a0a0a !important;
+  transition: 0.05s !important;
+}
+
+/* Efecto para los botones "Consultar" de productos */
+.producto-card a:active {
+  transform: scale(0.95);
+  background: #00bfff !important;
+  color: black !important;
+}
+
+/* Efecto para los botones de redes sociales */
+#redes a div:active {
+  transform: scale(0.98);
+  background: #00bfff20 !important;
+  border-color: #00bfff !important;
+}
+
+/* Efecto para el botón de copiar */
+.btn-copiar:active {
+  transform: scale(0.96);
+  background: #33ccff !important;
+}
+
+/* Efecto para los botones flotantes */
+.float-btn:active {
+  transform: scale(0.92);
+}
+
+/* Efecto para las tarjetas de producto (opcional) */
+.producto-card:active {
+  transform: scale(0.98);
+  border-color: #00bfff;
+}
+/* ===== FORZAR QUE LA PESTAÑA ACTIVA SE VEA AZUL ===== */
+.tab.activo {
+  background: #00bfff !important;
+  border-color: #00bfff !important;
+  color: #0a0a0a !important;
+  box-shadow: 0 4px 12px rgba(0,191,255,0.3) !important;
+}
+
+/* Modo claro también */
+body.light-mode .tab.activo {
+  background: #00bfff !important;
+  color: #0a0a0a !important;
+  border-color: #00bfff !important;
+}
+
+
+
+
+
+
+
   </style>
 </head>
 <body>
