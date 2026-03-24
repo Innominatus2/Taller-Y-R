@@ -655,23 +655,28 @@
     height: 100px;
   }
 
-  /* Compartir */
-  .share-box {
-    padding: 1rem;
-    flex-direction: column;
-    text-align: center;
-    gap: 0.5rem;
-  }
-  
-  .share-box > div {
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .share-box span {
-    font-size: 0.9rem;
-    word-break: break-all;
-  }
+/* Compartir */
+.share-box {
+  padding: 1rem;
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+/* Ajustar el texto para que no se corte */
+.share-box span:first-child {
+  word-break: break-word;
+  display: block;
+  line-height: 1.4;
+  max-width: 100%;
+}
+
+/* Asegurar que el enlace también se vea bien */
+.share-box > div {
+  word-break: break-all;
+  flex-wrap: wrap;
+  justify-content: center;
+}
   
   .btn-copiar {
     width: 100%;
