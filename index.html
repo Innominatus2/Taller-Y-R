@@ -910,6 +910,140 @@ body.light-mode .tab.activo {
   border-color: #00bfff !important;
 }
 
+/* Animaciones sutiles */
+.seccion {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.float-btn {
+  transition: all 0.2s ease;
+}
+
+/* ===== SECCIÓN SERVICIOS ===== */
+.servicios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.servicio-card {
+  background: #1f1f1f;
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid #333;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.servicio-card:hover {
+  transform: translateY(-5px);
+  border-color: #00bfff;
+  box-shadow: 0 10px 25px rgba(0,191,255,0.1);
+}
+
+.servicio-icono {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.servicio-card h3 {
+  color: #00bfff;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.servicio-descripcion {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.servicio-precio {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 1rem 0;
+}
+
+.servicio-precio small {
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: normal;
+}
+
+.servicio-boton {
+  background: transparent;
+  border: 2px solid #00bfff;
+  color: #00bfff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 40px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.servicio-boton:hover {
+  background: #00bfff;
+  color: #0a0a0a;
+}
+
+.servicio-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #00bfff20;
+  color: #00bfff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Destacado */
+.servicio-card.destacado {
+  border: 2px solid #00bfff;
+  background: linear-gradient(135deg, #1f1f1f 0%, #1a2a2a 100%);
+}
+
+.servicio-card.destacado .servicio-badge {
+  background: #00bfff;
+  color: #0a0a0a;
+}
+
+/* Modo claro */
+body.light-mode .servicio-card {
+  background: white;
+  border-color: #e2e8f0;
+}
+
+body.light-mode .servicio-card:hover {
+  border-color: #00bfff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+body.light-mode .servicio-descripcion {
+  color: #64748b;
+}
+
+body.light-mode .servicio-precio {
+  color: #1e293b;
+}
+
+body.light-mode .servicio-card.destacado {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+}
+
 
 
 
@@ -935,6 +1069,7 @@ body.light-mode .tab.activo {
 <div class="tab-container">
   <div class="tabs">
     <button class="tab activo" data-seccion="inicio">🏠 Inicio</button>
+    <button class="tab" data-seccion="servicios">⚙️ Servicios</button>
     <button class="tab" data-seccion="neumaticos">🔧 Neumáticos</button>
     <button class="tab" data-seccion="candados">🔒 Candados</button>
     <button class="tab" data-seccion="accesorios">⚡ Accesorios</button>
@@ -1023,7 +1158,7 @@ body.light-mode .tab.activo {
       return document.body.classList.contains('light-mode') ? '#e2e8f0' : '#333';
     }
 
-    // EVENTO PRINCIPAL DE BÚSQUEDA
+        // EVENTO PRINCIPAL DE BÚSQUEDA
     buscador.addEventListener('input', (e) => {
       const texto = e.target.value.toLowerCase().trim();
       
@@ -1032,36 +1167,37 @@ body.light-mode .tab.activo {
         return;
       }
 
-      // Buscar en todos los productos
-      const filtrados = todosProductos.filter(p => {
-        const nombreMatch = p.nombre.toLowerCase().includes(texto);
-        const numMatch = p.numero.includes(texto);
-        const categoriaMatch = p.categoria.includes(texto);
-        const busquedaGenerica = texto === 'neumatico' + p.numero || 
-                                 texto === 'candado' + p.numero ||
-                                 texto === 'accesorio' + p.numero;
-        
-        return nombreMatch || numMatch || categoriaMatch || busquedaGenerica;
+      // Combinar productos y servicios en un solo array
+      const todosItems = [...todosProductos, ...todosServicios];
+
+      const filtrados = todosItems.filter(item => {
+        const nombreMatch = item.nombre.toLowerCase().includes(texto);
+        const numMatch = item.numero?.toString().includes(texto);
+        const categoriaMatch = item.categoria?.includes(texto);
+        const descripcionMatch = item.descripcion?.toLowerCase().includes(texto);
+        const precioMatch = item.precio?.toLowerCase().includes(texto);
+      
+        return nombreMatch || numMatch || categoriaMatch || descripcionMatch || precioMatch;
       });
 
-      const hoverColor = getHoverColor();
       const borderColor = getBorderColor();
-
-      // También actualizar el color de hover en los elementos dinámicos
       const hoverBgColor = document.body.classList.contains('light-mode') ? '#e2e8f0' : '#2a2a2a';
 
       if (filtrados.length > 0) {
-        resultados.innerHTML = filtrados.map(p => {
-          const nombreResaltado = p.nombre.replace(
+        resultados.innerHTML = filtrados.map(item => {
+          const nombreResaltado = item.nombre.replace(
             new RegExp(`(${texto})`, 'gi'),
             '<span style="background:#00bfff20; color:#00bfff;">$1</span>'
           );
           
-          const icono = p.categoria === 'neumaticos' ? '🛞' : p.categoria === 'candados' ? '🔒' : '⚡';
+          const icono = item.categoria === 'neumaticos' ? '🛞' : 
+                        item.categoria === 'candados' ? '🔒' : 
+                        item.categoria === 'accesorios' ? '⚡' : 
+                        item.categoria === 'servicios' ? '⚙️' : '📦';
           
           return `
             <div style="padding:0.8rem 1rem; border-bottom:1px solid ${borderColor}; cursor:pointer; transition:0.2s;" 
-                 onclick="cambiarAPestanaYScroll('${p.categoria}', '${p.id}')"
+                 onclick="cambiarAPestanaYScroll('${item.categoria}', '${item.id}')"
                  onmouseover="this.style.background='${hoverBgColor}'"
                  onmouseout="this.style.background='transparent'">
               <div style="display:flex; align-items:center; gap:1rem;">
@@ -1069,8 +1205,8 @@ body.light-mode .tab.activo {
                 <div style="flex:1;">
                   <div style="font-weight:500;">${nombreResaltado}</div>
                   <div style="display:flex; gap:1rem; font-size:0.8rem; color:#888;">
-                    <span>📁 ${p.categoria}</span>
-                    <span>🔢 ${p.numero}</span>
+                    <span>📁 ${item.categoria}</span>
+                    <span>🔢 ${item.numero || '—'}</span>
                   </div>
                 </div>
                 <span style="color:#00bfff; font-size:0.9rem;">Ver →</span>
@@ -1084,12 +1220,41 @@ body.light-mode .tab.activo {
           <div style="padding:2rem; text-align:center;">
             <div style="font-size:2rem; margin-bottom:0.5rem;">😕</div>
             <div style="color:#888;">No encontramos "${texto}"</div>
-            <div style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Prueba con: 7, tubeless, cityroad...</div>
+            <div style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Prueba con: pinchazo, batería, 7, tubeless...</div>
           </div>
         `;
         resultados.style.display = 'block';
       }
     });
+
+    
+    // Escanear también servicios
+    function escanearServicios() {
+      const servicios = [];
+      document.querySelectorAll('.servicio-card').forEach((servicio, index) => {
+        const titulo = servicio.querySelector('h3')?.textContent.trim() || '';
+        const descripcion = servicio.querySelector('.servicio-descripcion')?.textContent.trim() || '';
+        const precio = servicio.querySelector('.servicio-precio')?.textContent.trim() || '';
+        
+        servicios.push({
+          nombre: titulo,
+          descripcion: descripcion,
+          precio: precio,
+          categoria: 'servicios',
+          numero: index + 1,
+          card: servicio,
+          id: `servicio-${index}`,
+          esServicio: true
+        });
+      });
+      return servicios;
+    }
+    
+    // Combinar productos y servicios
+    const todosServicios = escanearServicios();
+    console.log(`🔧 Buscador cargado: ${todosProductos.length} productos + ${todosServicios.length} servicios`);
+
+
 
     // Escuchar cambios de tema para actualizar colores en resultados existentes
     const themeBtn = document.getElementById('theme-toggle');
@@ -1146,6 +1311,11 @@ body.light-mode .tab.activo {
             <li>✓ Presupuesto sin compromiso</li>
           </ul>
         </div>
+        <div style="margin-top: 2rem; text-align: center;">
+         <button onclick="cambiarSeccion('servicios')" style="background: #00bfff; border: none; padding: 0.8rem 2rem; border-radius: 40px; font-weight: 600; cursor: pointer;">
+         Ver todos los servicios →
+         </button>
+       </div>
       </div>
     </div>
   </div>
@@ -1249,7 +1419,67 @@ body.light-mode .tab.activo {
   </div> 
 
 
-   
+
+<!-- SECCIÓN SERVICIOS -->
+<div id="servicios" class="seccion">
+  <div class="content-card">
+    <h2 style="color:#00bfff; margin-bottom:0.5rem;">🔧 Nuestros servicios profesionales</h2>
+    <p style="color:#888; margin-bottom:1.5rem;">Reparaciones rápidas, garantía en todos los trabajos y presupuesto sin compromiso</p>
+    
+    <div class="servicios-grid">
+
+<!-- Ajuste de frenos -->
+<div class="servicio-card">
+  <div class="servicio-icono">🛞</div>
+  <h3>Ajuste de frenos</h3>
+  <div class="servicio-descripcion">Regulación y puesta a punto del sistema de frenado. Se revisan pastillas, discos, cableado y nivel de respuesta.</div>
+  <button class="servicio-boton" onclick="solicitarServicio('Ajuste de frenos')">Solicitar →</button>
+</div>
+
+     
+<!-- Mantenimiento -->
+<div class="servicio-card destacado">
+  <div class="servicio-badge">⭐ MÁS SOLICITADO</div>
+  <div class="servicio-icono">🔧</div>
+  <h3>Mantenimiento</h3>
+  <div class="servicio-descripcion">Revisión general del sistema eléctrico, mecánico y de rodamientos. Incluye limpieza, ajustes y diagnóstico preventivo.</div>
+  <button class="servicio-boton" onclick="solicitarServicio('Mantenimiento')">Solicitar →</button>
+</div>
+
+<!-- Cambio de neumáticos -->
+<div class="servicio-card">
+  <div class="servicio-icono">🔄</div>
+  <h3>Cambio de neumáticos</h3>
+  <div class="servicio-descripcion">Sustitución completa del neumático. Compatible con todas las marcas y medidas. Incluye equilibrado.</div>
+  <button class="servicio-boton" onclick="solicitarServicio('Cambio de neumáticos')">Solicitar →</button>
+</div>
+
+<!-- Reparación de batería -->
+<div class="servicio-card">
+  <div class="servicio-icono">🔋</div>
+  <h3>Reparación de batería</h3>
+  <div class="servicio-descripcion">Prueba de celdas, equilibrio de batería, sustitución de celdas defectuosas.</div>
+  <button class="servicio-boton" onclick="solicitarServicio('Reparación de batería')">Solicitar →</button>
+</div>
+
+<!-- Pinchazos -->
+<div class="servicio-card">
+  <div class="servicio-icono">⚙️</div>
+  <h3>Pinchazos</h3>
+  <div class="servicio-descripcion">Reparación rápida de pinchazos en neumáticos con cámara o sin cámara. Incluye revisión de válvula.</div>
+  <button class="servicio-boton" onclick="solicitarServicio('Pinchazos')">Solicitar →</button>
+</div>
+      
+    </div>
+    
+    <!-- Nota adicional -->
+    <div style="margin-top: 2rem; padding: 1rem; background: #00bfff10; border-radius: 12px; border-left: 3px solid #00bfff;">
+      <p style="font-size: 0.9rem; color: #888;">
+        ⚡ <strong>Todos nuestros trabajos incluyen garantía de 3 meses</strong> · Reparaciones exprés disponibles (24h) · Presupuesto gratuito sin compromiso
+      </p>
+    </div>
+  </div>
+</div>
 
 
   <!-- TALLER (UBICACIÓN + HORARIO + FOTOS) -->
@@ -1371,7 +1601,6 @@ body.light-mode .tab.activo {
 </div>
 
 </main>
-
 
 <!-- SECCIÓN COMPARTIR (SIEMPRE VISIBLE) -->
 <div class="share-section">
@@ -1714,6 +1943,94 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(actualizarPlaceholder, 100);
   });
 })();
+
+// ===== FUNCIÓN PARA SOLICITAR SERVICIO =====
+function solicitarServicio(servicio) {
+  // Obtener datos si ya existen en el formulario (opcional)
+  const nombre = document.getElementById('presupuesto_nombre')?.value || '';
+  const telefono = document.getElementById('presupuesto_telefono')?.value || '';
+  const email = document.getElementById('presupuesto_email')?.value || '';
+  const modelo = document.getElementById('presupuesto_modelo')?.value || '';
+  
+  // Construir mensaje para WhatsApp
+  let mensaje = `*SOLICITUD DE SERVICIO*%0A%0A`;
+  mensaje += `*Servicio solicitado:* ${servicio}%0A`;
+  
+  if (nombre) mensaje += `*Nombre:* ${nombre}%0A`;
+  if (telefono) mensaje += `*Teléfono:* ${telefono}%0A`;
+  if (email) mensaje += `*Email:* ${email}%0A`;
+  if (modelo) mensaje += `*Modelo de patín:* ${modelo}%0A`;
+  
+  mensaje += `%0A*¿Qué problema tienes?*%0A`;
+  mensaje += `(Cuéntanoslo aquí...)`;
+  
+  const numeroWhatsapp = '34640846390';
+  const url = `https://wa.me/${numeroWhatsapp}?text=${mensaje}`;
+  
+  // Abrir WhatsApp
+  window.open(url, '_blank');
+  
+  // Mostrar notificación visual
+  const confirmacion = document.getElementById('presupuesto_mensaje_confirmacion');
+  if (confirmacion) {
+    confirmacion.style.color = '#00bfff';
+    confirmacion.textContent = `✅ Solicitud de "${servicio}" enviada. Te contactaremos por WhatsApp.`;
+    setTimeout(() => {
+      confirmacion.textContent = '';
+    }, 4000);
+  } else {
+    // Si no hay confirmación en la página, usar alert
+    alert(`✅ Solicitud de "${servicio}" enviada. Te contactaremos por WhatsApp.`);
+  }
+}
+
+// También podemos añadir una función para cambiar a la pestaña de presupuesto y preseleccionar el servicio
+function irAPresupuestoConServicio(servicio) {
+  // Cambiar a la pestaña de presupuesto
+  cambiarSeccion('presupuesto');
+  
+  // Activar visualmente el tab
+  tabs.forEach(tab => {
+    if (tab.dataset.seccion === 'presupuesto') {
+      tab.classList.add('activo');
+    } else {
+      tab.classList.remove('activo');
+    }
+  });
+  
+  // Seleccionar el servicio en el select
+  const selectServicio = document.getElementById('presupuesto_servicio');
+  if (selectServicio) {
+    // Buscar la opción que coincida con el servicio
+    for (let i = 0; i < selectServicio.options.length; i++) {
+      const optionText = selectServicio.options[i].text;
+      if (servicio.toLowerCase().includes(optionText.toLowerCase()) || 
+          optionText.toLowerCase().includes(servicio.toLowerCase())) {
+        selectServicio.selectedIndex = i;
+        break;
+      }
+    }
+  }
+  
+  // Scroll suave al formulario
+  const form = document.getElementById('formPresupuesto');
+  if (form) {
+    setTimeout(() => {
+      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      form.style.transition = 'background 0.3s';
+      form.style.background = '#00bfff20';
+      setTimeout(() => {
+        form.style.background = '';
+      }, 1500);
+    }, 100);
+  }
+}
+
+
+
+
+
+
 </script>
 
 </body>
