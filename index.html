@@ -1054,9 +1054,17 @@ body.light-mode .servicio-card.destacado {
 .float-btn.whatsapp:hover img.whatsapp-icon {
   transform: scale(1.1);
 }
-
-
-
+@media (max-width: 600px) {
+  #share-inicio-btn, #share-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem !important;
+  }
+  
+  #inicio .content-card > div:first-of-type {
+    margin-bottom: 0;
+  }
+}
 
 
 
@@ -1299,38 +1307,50 @@ body.light-mode .servicio-card.destacado {
 <!-- CONTENIDO PRINCIPAL: SOLO CAMBIA SEGÚN PESTAÑA -->
 <main>
   <!-- SECCIÓN INICIO (PRESENTACIÓN) -->
-  <div id="inicio" class="seccion activa">
-    <div class="content-card">
-      <h2 style="color:#00bfff; font-size:2rem; margin-bottom:1rem;">Bienvenido a Y&R</h2>
-      <p style="font-size:1.2rem; margin-bottom:1.5rem;">Somos tu taller de confianza en Sevilla para patines eléctricos. Más de 10 años de experiencia nos avalan.</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
-        <div>
-          <h3 style="color:#00bfff;">🔧 ¿Qué hacemos?</h3>
-          <ul style="list-style:none; margin-top:1rem;">
-            <li>✓ Mantenimiento general</li>
-            <li>✓ Reparación de pinchazos</li>
-            <li>✓ Cambio de neumáticos</li>
-            <li>✓ Baterías y electricidad</li>
-          </ul>
-        </div>
-        <div>
-          <h3 style="color:#00bfff;">⭐ Por qué elegirnos</h3>
-          <ul style="list-style:none; margin-top:1rem;">
-            <li>✓ Profesionales certificados</li>
-            <li>✓ Reparación en el día</li>
-            <li>✓ Presupuesto sin compromiso</li>
-          </ul>
-        </div>
-        <div style="margin-top: 2rem; text-align: center;">
-         <button onclick="cambiarSeccion('servicios')" style="background: #00bfff; border: none; padding: 0.8rem 2rem; border-radius: 40px; font-weight: 600; cursor: pointer;">
-         Ver todos los servicios →
-         </button>
-       </div>
+<div id="inicio" class="seccion activa">
+  <div class="content-card">
+    <h2 style="color:#00bfff; font-size:2rem; margin-bottom:1rem;">Bienvenido a Y&R</h2>
+    <p style="font-size:1.2rem; margin-bottom:1.5rem;">Somos tu taller de confianza en Sevilla para patines eléctricos. Más de 10 años de experiencia nos avalan.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+      <div>
+        <h3 style="color:#00bfff;">🔧 ¿Qué hacemos?</h3>
+        <ul style="list-style:none; margin-top:1rem;">
+          <li>✓ Mantenimiento general</li>
+          <li>✓ Reparación de pinchazos</li>
+          <li>✓ Cambio de neumáticos</li>
+          <li>✓ Baterías y electricidad</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:#00bfff;">⭐ Por qué elegirnos</h3>
+        <ul style="list-style:none; margin-top:1rem;">
+          <li>✓ Profesionales certificados</li>
+          <li>✓ Reparación en el día</li>
+          <li>✓ Presupuesto sin compromiso</li>
+        </ul>
       </div>
     </div>
+    
+    <!-- BOTÓN VER SERVICIOS (AHORA PRIMERO) -->
+    <div style="margin-top: 2rem; text-align: center;">
+      <button onclick="cambiarSeccion('servicios')" style="background: #00bfff; border: none; padding: 0.8rem 2rem; border-radius: 40px; font-weight: 600; cursor: pointer;">
+        Ver todos los servicios →
+      </button>
+    </div>
+    
+    <!-- SECCIÓN DE COMPARTIR (AHORA DESPUÉS) -->
+    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0,191,255,0.1); border-radius: 20px; text-align: center; border: 1px solid rgba(0,191,255,0.3);">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <span style="font-size: 1.8rem;">📢</span>
+        <span style="font-weight: 500;">¿Conoces a alguien con patín?</span>
+        <button id="share-inicio-btn" style="background: #00bfff; border: none; padding: 0.6rem 1.5rem; border-radius: 40px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;">
+          📤 Compartir esta página
+        </button>
+      </div>
+      <p style="font-size: 0.8rem; color: #888; margin-top: 0.8rem;">¡Ayúdanos a llegar a más personas que necesitan nuestro taller!</p>
+    </div>
   </div>
-
- 
+</div>
 
 <!-- NEUMÁTICOS (Imagenes con rutas reales subido a Github)-->
   <div id="neumaticos" class="seccion">
@@ -1627,11 +1647,7 @@ body.light-mode .servicio-card.destacado {
   <button class="float-btn" id="theme-toggle">🌙</button>
 </div>
 
-<div class="floating-actions">
-  <a href="https://wa.me/34640846390?text=Hola%20quiero%20consultar%20sobre%20el%20taller" class="float-btn whatsapp" target="_blank">📱</a>
-  <button class="float-btn" id="theme-toggle">🌙</button>
-  <button class="float-btn" id="share-btn" style="background: #00bfff;">📤</button>
-</div>
+
 
 <!-- MODAL LOGO -->
 <div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; z-index:1000;" onclick="this.style.display='none'">
@@ -2115,8 +2131,24 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-
-
+// Botón de compartir en Inicio
+document.getElementById('share-inicio-btn')?.addEventListener('click', async () => {
+  const shareData = {
+    title: 'Taller Y&R - Reparación de patines eléctricos',
+    text: '🔧 ¿Problemas con tu patín eléctrico? En Taller Y&R te ayudamos en Sevilla.',
+    url: 'https://innominatus2.github.io/Taller-Y-R/'
+  };
+  
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+    } catch (err) {
+      if (err.name !== 'AbortError') copiarEnlace();
+    }
+  } else {
+    copiarEnlace();
+  }
+});
 
 
 </script>
