@@ -1871,8 +1871,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Deshabilitar botón para evitar múltiples envíos
       btnEnviar.disabled = true;
       btnEnviar.style.opacity = '0.7';
-      btnEnviar.textContent = '⏳ Enviando...';
-      
+      btnEnviar.textContent = '⏳ Enviando...';  
       // Construir mensaje para WhatsApp
       const textoWhatsapp = `*NUEVA SOLICITUD DE PRESUPUESTO*%0A%0A*Nombre:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Modelo:* ${modelo || 'No especificado'}%0A*Servicio:* ${servicio}%0A*Mensaje:* ${mensaje || 'Sin detalles adicionales'}%0A%0A---%0ASolicitud enviada desde la web`;
       
@@ -2025,6 +2024,29 @@ function irAPresupuestoConServicio(servicio) {
     }, 100);
   }
 }
+
+
+// Script dinámico para los mensajes de WhatsApp
+document.addEventListener('DOMContentLoaded', function() {
+  // Seleccionar todos los enlaces dentro de las tarjetas de producto
+  const productLinks = document.querySelectorAll('.producto-card a');
+  
+  productLinks.forEach(link => {
+    // Guardar el texto original del producto para usarlo en el mensaje
+    const productoCard = link.closest('.producto-card');
+    const nombreProducto = productoCard.querySelector('h3')?.textContent.trim() || 'Producto';
+    
+    // Establecer el href con el mensaje personalizado
+    const mensaje = `Hola, me interesa el producto: ${nombreProducto}`;
+    link.href = `https://wa.me/34640846390?text=${encodeURIComponent(mensaje)}`;
+    
+    // Opcional: Añadir un atributo data para debug
+    link.setAttribute('data-producto', nombreProducto);
+  });
+  
+  console.log(`✅ Se configuraron ${productLinks.length} enlaces de productos para WhatsApp`);
+});
+
 
 
 
