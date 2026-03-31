@@ -1043,7 +1043,17 @@ body.light-mode .servicio-precio {
 body.light-mode .servicio-card.destacado {
   background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
 }
+/* Ajustar icono de WhatsApp dentro del botón */
+.float-btn img.whatsapp-icon {
+  width: 28px;
+  height: 28px;
+  filter: brightness(0) invert(1); /* Esto hace el icono blanco */
+  transition: 0.2s;
+}
 
+.float-btn.whatsapp:hover img.whatsapp-icon {
+  transform: scale(1.1);
+}
 
 
 
@@ -1621,7 +1631,9 @@ body.light-mode .servicio-card.destacado {
 
 <!-- BOTONES FLOTANTES -->
 <div class="floating-actions">
-  <a href="https://wa.me/34640846390?text=Hola%20quiero%20consultar%20sobre%20el%20taller" class="float-btn whatsapp" target="_blank">📱</a>
+  <a href="https://wa.me/34640846390?text=Hola%20quiero%20consultar%20sobre%20el%20taller" class="float-btn whatsapp" target="_blank">
+  <img src="img/whatsapp-icon.svg" alt="WhatsApp" class="whatsapp-icon" style="width: 28px; height: 28px; filter: brightness(0) invert(1);">
+  </a>
   <button class="float-btn" id="theme-toggle">🌙</button>
 </div>
 
