@@ -1637,6 +1637,12 @@ body.light-mode .servicio-card.destacado {
   <button class="float-btn" id="theme-toggle">🌙</button>
 </div>
 
+<div class="floating-actions">
+  <a href="https://wa.me/34640846390?text=Hola%20quiero%20consultar%20sobre%20el%20taller" class="float-btn whatsapp" target="_blank">📱</a>
+  <button class="float-btn" id="theme-toggle">🌙</button>
+  <button class="float-btn" id="share-btn" style="background: #00bfff;">📤</button>
+</div>
+
 <!-- MODAL LOGO -->
 <div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; z-index:1000;" onclick="this.style.display='none'">
   <img id="modal-img" src="" style="max-width:90%; max-height:90%; border-radius:20px;">
@@ -2059,7 +2065,65 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log(`✅ Se configuraron ${productLinks.length} enlaces de productos para WhatsApp`);
 });
 
+// Botón de compartir profesional
+document.getElementById('share-btn')?.addEventListener('click', async () => {
+  const shareData = {
+    title: 'Taller Y&R - Reparación de patines eléctricos',
+    text: '🔧 ¿Problemas con tu patín eléctrico? En Taller Y&R te ayudamos en Sevilla.',
+    url: 'https://innominatus2.github.io/Taller-Y-R/'
+  };
+  
+  // Usar Web Share API si está disponible (móviles)
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+      console.log('Compartido correctamente');
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        // Fallback: copiar enlace
+        copiarEnlace();
+      }
+    }
+  } else {
+    // En escritorio: copiar enlace
+    copiarEnlace();
+  }
+});
 
+function copiarEnlace() {
+  const enlace = 'https://innominatus2.github.io/Taller-Y-R/';
+  navigator.clipboard.writeText(enlace).then(() => {
+    // Mostrar toast notification
+    const toast = document.createElement('div');
+    toast.textContent = '✅ Enlace copiado al portapapeles';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      background: #00bfff;
+      color: #0a0a0a;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      z-index: 1000;
+      animation: fadeOut 2s ease forwards;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+  });
+}
+
+// Añadir animación CSS
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeOut {
+    0% { opacity: 1; transform: translateY(0); }
+    70% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); visibility: hidden; }
+  }
+`;
+document.head.appendChild(style);
 
 
 
