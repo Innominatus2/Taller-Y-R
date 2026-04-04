@@ -1064,6 +1064,22 @@ body.light-mode .servicio-card.destacado {
   #inicio .content-card > div:first-of-type {
     margin-bottom: 0;
   }
+  /* Añadir skeleton loading para productos */
+.skeleton-card {
+    background: linear-gradient(90deg, #1f1f1f 25%, #2a2a2a 50%, #1f1f1f 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 16px;
+    height: 200px;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+    }
+
+
+
 }
 
 
@@ -1511,7 +1527,6 @@ body.light-mode .servicio-card.destacado {
   </div>
 </div>
 
-
   <!-- TALLER (UBICACIÓN + HORARIO + FOTOS) -->
   <div id="taller" class="seccion">
     <div class="content-card">
@@ -1595,6 +1610,18 @@ body.light-mode .servicio-card.destacado {
         <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">🛴 Modelo de patín</label>
         <input type="text" id="presupuesto_modelo" placeholder="Ej: Xiaomi Mi 3, Ninebot Max, etc." style="width: 100%; padding: 0.8rem 1rem; background: #1f1f1f; border: 1px solid #333; border-radius: 12px; color: white; font-size: 1rem;">
       </div>
+
+     <!-- Dentro del formulario, después del campo "Modelo" -->
+     <div>
+     <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">📦 Producto que te interesa (opcional)</label>
+     <select id="presupuesto_producto" style="width: 100%; padding: 0.8rem 1rem; background: #1f1f1f; border: 1px solid #333; border-radius: 12px; color: white;">
+     <option value="">-- Selecciona un producto --</option>
+    <!-- Los productos se cargarán automáticamente aquí -->
+  </select>
+</div>
+
+
+
       
       <!-- Tipo de servicio -->
       <div>
@@ -1606,7 +1633,7 @@ body.light-mode .servicio-card.destacado {
           <option value="revision_general">Revisión general</option>
           <option value="problema_bateria">Problema con batería</option>
           <option value="problema_motor">Problema con motor</option>
-          <option value="accesorio">Compra de accesorio</option>
+          <option value="accesorio">Compra de un producto</option>
           <option value="otro">Otro</option>
         </select>
       </div>
@@ -1896,9 +1923,22 @@ document.addEventListener('DOMContentLoaded', function() {
       btnEnviar.disabled = true;
       btnEnviar.style.opacity = '0.7';
       btnEnviar.textContent = '⏳ Enviando...';  
+      // Recoger producto seleccionado
+      const productoSelect = document.getElementById('presupuesto_producto');
+      const producto = productoSelect?.options[productoSelect.selectedIndex]?.text || '';
+      const productoValor = producto !== '-- Selecciona un producto --' ? producto : '';
+
       // Construir mensaje para WhatsApp
-      const textoWhatsapp = `*NUEVA SOLICITUD DE PRESUPUESTO*%0A%0A*Nombre:* ${nombre}%0A*Teléfono:* ${telefono}%0A*Email:* ${email}%0A*Modelo:* ${modelo || 'No especificado'}%0A*Servicio:* ${servicio}%0A*Mensaje:* ${mensaje || 'Sin detalles adicionales'}%0A%0A---%0ASolicitud enviada desde la web`;
-      
+      let textoWhatsapp = `*NUEVA SOLICITUD DE PRESUPUESTO*%0A%0A`;
+      textoWhatsapp += `*Nombre:* ${nombre}%0A`;
+      textoWhatsapp += `*Teléfono:* ${telefono}%0A`;
+      textoWhatsapp += `*Email:* ${email}%0A`;
+      textoWhatsapp += `*Modelo:* ${modelo || 'No especificado'}%0A`;
+      if (productoValor) textoWhatsapp += `*Producto:* ${productoValor}%0A`;
+      textoWhatsapp += `*Servicio:* ${servicio}%0A`;
+      textoWhatsapp += `*Mensaje:* ${mensaje || 'Sin detalles adicionales'}%0A%0A`;
+      textoWhatsapp += `---%0ASolicitud enviada desde la web`;
+     
       const numeroWhatsapp = '34640846390';
       const url = `https://wa.me/${numeroWhatsapp}?text=${textoWhatsapp}`;
       
@@ -2148,6 +2188,75 @@ document.getElementById('share-inicio-btn')?.addEventListener('click', async () 
   } else {
     copiarEnlace();
   }
+});
+
+// ===== SELECTOR AUTOMÁTICO DE PRODUCTOS =====
+function cargarProductosEnSelector() {
+  const selectorProducto = document.getElementById('presupuesto_producto');
+  if (!selectorProducto) return;
+  
+  // LIMPIAR COMPLETAMENTE el selector (incluyendo optgroups)
+  // Guardamos solo la primera opción por si acaso
+  const primeraOpcion = selectorProducto.options[0];
+  selectorProducto.innerHTML = '';
+  selectorProducto.appendChild(primeraOpcion);
+  
+  // Agrupar productos por categoría (usando Set para evitar duplicados)
+  const productosPorCategoria = {
+    'neumaticos': new Set(),
+    'candados': new Set(),
+    'accesorios': new Set()
+  };
+  
+  // Escanear todas las tarjetas de producto
+  document.querySelectorAll('.producto-card').forEach(card => {
+    const nombre = card.querySelector('h3')?.textContent.trim() || '';
+    const img = card.querySelector('img');
+    let categoria = 'accesorios';
+    
+    // Detectar categoría por la ruta de la imagen
+    if (img && img.src) {
+      if (img.src.includes('neumaticos')) categoria = 'neumaticos';
+      else if (img.src.includes('candados')) categoria = 'candados';
+      else if (img.src.includes('accesorios')) categoria = 'accesorios';
+    }
+    
+    if (nombre && !productosPorCategoria[categoria].has(nombre)) {
+      productosPorCategoria[categoria].add(nombre);
+    }
+  });
+  
+  // Mapeo de nombres de categoría
+  const nombresCategoria = {
+    'neumaticos': '🛞 Neumáticos',
+    'candados': '🔒 Candados',
+    'accesorios': '⚡ Accesorios'
+  };
+  
+  // Agregar opciones al selector
+  for (const [categoriaKey, productosSet] of Object.entries(productosPorCategoria)) {
+    const productos = Array.from(productosSet).sort(); // Ordenar alfabéticamente
+    if (productos.length > 0) {
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = nombresCategoria[categoriaKey];
+      
+      productos.forEach(producto => {
+        const option = document.createElement('option');
+        option.value = producto;
+        option.textContent = producto;
+        optgroup.appendChild(option);
+      });
+      
+      selectorProducto.appendChild(optgroup);
+    }
+  }
+  
+  console.log(`✅ Selector cargado: ${productosPorCategoria.neumaticos.size} neumáticos, ${productosPorCategoria.candados.size} candados, ${productosPorCategoria.accesorios.size} accesorios`);
+}
+
+// Ejecutar SOLO UNA VEZ cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+  cargarProductosEnSelector();
 });
 
 
