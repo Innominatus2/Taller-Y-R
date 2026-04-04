@@ -368,7 +368,7 @@
       display: block;
     }
 
-    /* ===== TARJETAS DE CONTENIDO ===== */
+  /* ===== TARJETAS DE CONTENIDO ===== */
     .content-card {
       background: #151515;
       border-radius: 24px;
@@ -1118,8 +1118,101 @@ body.light-mode .servicio-card.destacado {
     100% { background-position: -200% 0; }
     }
 
+  
 
+}
+/* Header mejorado */
+.header {
+  background: #111;
+  padding: 1.5rem 2rem;
+  border-bottom: 3px solid #00bfff;
+}
 
+.header-content {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.logo-container {
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00bfff;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,191,255,0.3);
+}
+
+.header-text h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.header-text h1 .highlight {
+  color: #00bfff;
+  background: none;
+  -webkit-text-fill-color: #00bfff;
+}
+
+.tagline {
+  color: #aaa;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.header-badges {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: rgba(0,191,255,0.1);
+  color: #00bfff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Modo claro */
+body.light-mode .badge {
+  background: rgba(0,191,255,0.15);
+}
+
+/* Animaciones globales */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efecto de carga para imágenes */
+.producto-imagen {
+  background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.producto-imagen.loaded {
+  animation: none;
+  background: none;
 }
 
 
@@ -1128,13 +1221,20 @@ body.light-mode .servicio-card.destacado {
 </head>
 <body>
 
-<!-- HEADER (siempre visible) -->
+<!-- HEADER MEJORADO -->
 <div class="header">
   <div class="header-content">
-    <img src="Y & R .jpeg" alt="Logo Taller Y&R" class="logo" id="logo-img">
+    <div class="logo-container">
+      <img src="Y & R .jpeg" alt="Taller Y&R" class="logo" id="logo-img">
+    </div>
     <div class="header-text">
-      <h1>Taller Y&R</h1>
-      <p>⚡ Especialistas en reparación de patines eléctricos · Sevilla</p>
+      <h1>Taller <span class="highlight">Y&R</span></h1>
+      <p class="tagline">⚡ Especialistas en reparación de patines eléctricos</p>
+      <div class="header-badges">
+        <span class="badge">🔧 +10 años de experiencia</span>
+        <span class="badge">📍 Sevilla</span>
+        <span class="badge">⭐ 4.8/5</span>
+      </div>
     </div>
   </div>
 </div>
