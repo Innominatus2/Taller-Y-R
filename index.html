@@ -1050,6 +1050,46 @@ body.light-mode .servicio-card.destacado {
   filter: brightness(0) invert(1); /* Esto hace el icono blanco */
   transition: 0.2s;
 }
+/* ===== MEJORAS PARA SELECTOR DE PRODUCTOS EN MÓVIL ===== */
+@media (max-width: 600px) {
+  /* Ajustar el selector de productos */
+  #presupuesto_producto {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 0.8rem !important;
+  }
+  
+  /* Las opciones dentro del select también se ajustan */
+  #presupuesto_producto option,
+  #presupuesto_producto optgroup {
+    font-size: 0.8rem !important;
+    white-space: normal !important; /* Permite texto en varias líneas */
+    word-break: break-word !important;
+  }
+  
+  /* Para navegadores que soportan esto (iOS) */
+  @supports (-webkit-touch-callout: none) {
+    #presupuesto_producto {
+      font-size: 16px !important; /* Evita zoom en iOS */
+    }
+  }
+}
+
+/* Mejora general para selects en móvil */
+@media (max-width: 600px) {
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2300bfff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+  }
+  
+  /* Modo claro también */
+  body.light-mode select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2300bfff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+  }
+}
 
 .float-btn.whatsapp:hover img.whatsapp-icon {
   transform: scale(1.1);
