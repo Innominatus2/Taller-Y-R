@@ -1214,6 +1214,131 @@ body.light-mode .badge {
   animation: none;
   background: none;
 }
+/* Añade esto a tu CSS */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 280px;
+  height: 100%;
+  background: #111;
+  z-index: 999;
+  transition: 0.3s;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.3);
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.sidebar-close {
+  background: none;
+  border: none;
+  color: #00bfff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.sidebar-section {
+  margin-bottom: 2rem;
+}
+
+.sidebar-section h4 {
+  color: #00bfff;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.sidebar-section a {
+  display: block;
+  padding: 0.5rem 0;
+  color: #ccc;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.sidebar-section a:hover {
+  color: #00bfff;
+  padding-left: 0.5rem;
+}
+
+.menu-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #00bfff;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+  .menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+    /* Ocultar las pestañas en móvil */
+  .tab-container {
+    display: none;
+  }
+  
+  /* Mostrar botón menú */
+  .menu-btn {
+    display: flex;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: #00bfff;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Ajustar header para que no tape el botón */
+  .header {
+    padding-left: 70px;
+  }
+}
 
 
 
@@ -1505,6 +1630,53 @@ body.light-mode .badge {
       </div>
       <p style="font-size: 0.8rem; color: #888; margin-top: 0.8rem;">¡Ayúdanos a llegar a más personas que necesitan nuestro taller!</p>
     </div>
+  </div>
+</div>
+<!-- Botón menú hamburguesa (solo visible en móvil) -->
+<button class="menu-btn" id="menuBtn">☰</button>
+
+<!-- Sidebar - Menú principal en móvil -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span style="color:#00bfff; font-weight:bold;">📁 Taller Y&R</span>
+    <button class="sidebar-close" id="closeSidebar">✕</button>
+  </div>
+  
+  <!-- TODAS las secciones del sitio -->
+  <div class="sidebar-section">
+    <h4>📋 Menú</h4>
+    <a href="#" data-seccion="inicio">🏠 Inicio</a>
+    <a href="#" data-seccion="servicios">⚙️ Servicios</a>
+    <a href="#" data-seccion="neumaticos">🔧 Neumáticos</a>
+    <a href="#" data-seccion="candados">🔒 Candados</a>
+    <a href="#" data-seccion="accesorios">⚡ Accesorios</a>
+    <a href="#" data-seccion="presupuesto">📝 Presupuesto</a>
+    <a href="#" data-seccion="taller">📍 Taller</a>
+    <a href="#" data-seccion="redes">📱 Redes sociales</a>
+  </div>
+  
+  <div class="sidebar-section">
+    <h4>🔧 Servicios rápidos</h4>
+    <a href="#" onclick="solicitarServicio('Mantenimiento'); closeSidebar();">⚡ Mantenimiento</a>
+    <a href="#" onclick="solicitarServicio('Cambio de neumáticos'); closeSidebar();">🔄 Cambio de neumáticos</a>
+    <a href="#" onclick="solicitarServicio('Pinchazos'); closeSidebar();">🛠️ Reparación de pinchazos</a>
+  </div>
+  
+  <div class="sidebar-section">
+    <h4>📞 Contacto</h4>
+    <a href="https://wa.me/34640846390">💬 WhatsApp</a>
+    <a href="tel:640846390">📞 Llamar ahora</a>
+  </div>
+  
+  <div class="sidebar-section">
+    <h4>📍 Visítanos</h4>
+    <a href="#" onclick="cambiarSeccion('taller'); closeSidebar();">📍 Ver ubicación</a>
+  </div>
+  
+  <div class="sidebar-section">
+    <h4>⭐ Tema</h4>
+    <a href="#" id="sidebar-theme-toggle">🌓 Cambiar tema</a>
   </div>
 </div>
 
@@ -2398,8 +2570,45 @@ function cargarProductosEnSelector() {
 document.addEventListener('DOMContentLoaded', function() {
   cargarProductosEnSelector();
 });
+// ===== SIDEBAR =====
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebarOverlay');
+const closeBtn = document.getElementById('closeSidebar');
 
+function openSidebar() {
+  sidebar.classList.add('open');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
 
+function closeSidebar() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.sidebar a[data-seccion]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    cambiarSeccion(link.getAttribute('data-seccion'));
+    closeSidebar();
+  });
+});
+
+menuBtn?.addEventListener('click', openSidebar);
+closeBtn?.addEventListener('click', closeSidebar);
+overlay?.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+});
+
+document.getElementById('sidebar-theme-toggle')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('theme-toggle').click();
+  closeSidebar();
+});
 </script>
 
 </body>
