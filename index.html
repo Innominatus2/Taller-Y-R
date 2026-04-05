@@ -1242,7 +1242,7 @@ body.light-mode .badge {
   background: #111;
   z-index: 999;
   transition: 0.3s;
-  padding: 2rem 1rem;
+  padding: 1rem;
   overflow-y: auto;
   box-shadow: 2px 0 20px rgba(0,0,0,0.3);
 }
@@ -1255,8 +1255,8 @@ body.light-mode .badge {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 0.5rem 1rem 0.5rem;
   border-bottom: 1px solid #333;
 }
 
@@ -1266,6 +1266,15 @@ body.light-mode .badge {
   color: #00bfff;
   font-size: 1.5rem;
   cursor: pointer;
+}
+/* Asegurar que el botón de cerrar esté visible */
+.sidebar-close {
+  background: none;
+  border: none;
+  color: #00bfff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
 }
 
 .sidebar-section {
@@ -1291,28 +1300,14 @@ body.light-mode .badge {
   padding-left: 0.5rem;
 }
 
-.menu-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: #00bfff;
-  border: none;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 1000;
-  display: none;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
 
 @media (max-width: 768px) {
-  /* Ocultar las pestañas en móvil */
+  /* Ocultar pestañas */
   .tab-container {
     display: none;
   }
   
-  /* Botón menú flotante */
+  /* Botón menú */
   .menu-btn {
     display: flex;
     position: fixed;
@@ -1328,9 +1323,10 @@ body.light-mode .badge {
     justify-content: center;
     border: none;
     cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   }
   
-  /* Ajustar el header - centrar el contenido */
+  /* Ajustes header */
   .header {
     padding: 1rem;
     text-align: center;
@@ -1357,6 +1353,99 @@ body.light-mode .badge {
     justify-content: center;
   }
 }
+
+/* Ocultar pestañas en PC también */
+@media (min-width: 769px) {
+  .tab-container {
+    display: none;
+  }
+  
+  .menu-btn {
+    display: flex;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: #00bfff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  
+  .header {
+    padding-left: 90px;
+  }
+}
+
+/* Modo claro para el botón */
+body.light-mode .menu-btn {
+  background: #00bfff;
+  color: #0a0a0a;
+}
+/* ===== MODO CLARO PARA EL BOTÓN MENÚ ===== */
+body.light-mode .menu-btn {
+  background: #00bfff;
+  color: #0a0a0a;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+body.light-mode .menu-btn:hover {
+  background: #33ccff;
+  transform: scale(1.05);
+}
+
+/* Modo claro para el sidebar */
+body.light-mode .sidebar {
+  background: white;
+  border-right: 1px solid #e2e8f0;
+}
+
+body.light-mode .sidebar-header {
+  border-bottom-color: #e2e8f0;
+}
+
+body.light-mode .sidebar-section h4 {
+  color: #00bfff;
+}
+
+body.light-mode .sidebar-section a {
+  color: #64748b;
+}
+
+body.light-mode .sidebar-section a:hover {
+  color: #00bfff;
+  background: rgba(0,191,255,0.1);
+}
+
+body.light-mode .sidebar-close {
+  color: #00bfff;
+}
+
+/* Modo claro para el overlay del sidebar */
+body.light-mode .sidebar-overlay {
+  background: rgba(0,0,0,0.4);
+}
+/* Cuando el sidebar está abierto, ocultar el botón ☰ exterior */
+.sidebar.open ~ .menu-btn {
+  display: none;
+}
+
+/* O mejor aún: hacer que el botón ☰ quede detrás del sidebar */
+.menu-btn {
+  z-index: 1001;
+}
+
+.sidebar {
+  z-index: 1002; /* Mayor que el botón ☰ */
+}
+
+
 
 
 
