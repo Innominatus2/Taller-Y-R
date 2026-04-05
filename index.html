@@ -1307,23 +1307,17 @@ body.light-mode .badge {
 }
 
 @media (max-width: 768px) {
-  .menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-    /* Ocultar las pestañas en móvil */
+  /* Ocultar las pestañas en móvil */
   .tab-container {
     display: none;
   }
   
-  /* Mostrar botón menú */
+  /* Botón menú flotante */
   .menu-btn {
     display: flex;
     position: fixed;
-    top: 20px;
-    left: 20px;
+    top: 15px;
+    left: 15px;
     z-index: 1001;
     background: #00bfff;
     width: 45px;
@@ -1332,11 +1326,35 @@ body.light-mode .badge {
     font-size: 1.4rem;
     align-items: center;
     justify-content: center;
+    border: none;
+    cursor: pointer;
   }
   
-  /* Ajustar header para que no tape el botón */
+  /* Ajustar el header - centrar el contenido */
   .header {
-    padding-left: 70px;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .header-content {
+    justify-content: center;
+  }
+  
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .header-text h1 {
+    font-size: 1.5rem;
+  }
+  
+  .header-text p {
+    font-size: 0.8rem;
+  }
+  
+  .header-badges {
+    justify-content: center;
   }
 }
 
