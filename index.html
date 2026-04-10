@@ -1946,24 +1946,36 @@ body.light-mode .sidebar-overlay {
   </div>
 </div>
 
-  <!-- TALLER (UBICACIÓN + HORARIO + FOTOS) -->
-  <div id="taller" class="seccion">
-    <div class="content-card">
-      <h2 style="color:#00bfff; margin-bottom:1.5rem;">📍 Nuestro taller</h2>
-      <div class="taller-grid">
-        <div>
-          <div class="info-block">
-            <h3>Dirección</h3>
-            <p>Calle Madreselva, 10, Bajo derecha<br>41008 Sevilla</p>
+<div id="taller" class="seccion">
+  <div class="content-card">
+    <h2 style="color:#00bfff; margin-bottom:1.5rem;">📍 Nuestro taller</h2>
+    <div class="taller-grid">
+      <!-- Columna izquierda: info y horario -->
+      <div>
+        <div class="info-block">
+          <h3>Dirección</h3>
+          <p>Calle Madreselva, 10, Bajo derecha<br>41008 Sevilla</p>
+        </div>
+        <div class="info-block" style="margin-top:1rem;">
+          <h3>Horario</h3>
+          <p>Lun–Sáb: 9:00–14:00 · 17:00–21:00<br>Domingo: cerrado</p>
+        </div>
+      </div>
+      
+      <!-- Columna derecha: FOTOS DEL TALLER -->
+      <div>
+        <div class="info-block">
+          <h3>📸 Fotos del taller</h3>
+          <div class="fotos-grid">
+            <img src="img/taller/foto1.jpeg" alt="Taller Y&R vista 1" onclick="abrirModalImagen(this.src)">
+            <img src="img/taller/foto2.jpeg" alt="Taller Y&R vista 2" onclick="abrirModalImagen(this.src)">
           </div>
-          <div class="info-block" style="margin-top:1rem;">
-            <h3>Horario</h3>
-            <p>Lun–Sáb: 9:00–14:00 · 17:00–21:00<br>Domingo: cerrado</p>
-          </div>
+          <p style="font-size:0.8rem; color:#888; margin-top:0.8rem;">🖱️ Haz clic en cualquier foto para ampliarla</p>
         </div>
       </div>
     </div>
   </div>
+</div>
       
 
   
@@ -2716,6 +2728,30 @@ document.getElementById('sidebar-theme-toggle')?.addEventListener('click', (e) =
   document.getElementById('theme-toggle').click();
   closeSidebar();
 });
+</script>
+
+<script>
+
+// Función para abrir imágenes del taller en modal
+function abrirModalImagen(src) {
+  const modalImg = document.getElementById('modal-producto-img');
+  const modalProducto = document.getElementById('modal-producto');
+  if (modalImg && modalProducto) {
+    modalImg.src = src;
+    modalProducto.style.display = 'flex';
+  } else {
+    // Fallback: crear modal temporal
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:flex;justify-content:center;align-items:center;z-index:10000;cursor:pointer';
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.cssText = 'max-width:90%;max-height:90%;border-radius:12px';
+    modal.appendChild(img);
+    modal.onclick = () => modal.remove();
+    document.body.appendChild(modal);
+  }
+}
+
 </script>
 
 </body>
