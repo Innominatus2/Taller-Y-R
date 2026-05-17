@@ -160,7 +160,7 @@
  <div id="candados" class="seccion-contenido">
   <div class="content-card">
     <h2 style="color:#00bfff; margin-bottom:1.5rem;">🔒 Candados y seguridad</h2>
-    <div class="productos-grid" id="grid-candados">
+    <div class="productos-grid" id="grid-candados-inicio"
       </div>
   </div>
 </div>
@@ -1198,7 +1198,7 @@ document.addEventListener('DOMContentLoaded', function() {
       .catch(error => {
         console.error('Error al cargar neumáticos:', error);
       });
-      
+
       // 4. CARGAR LOS CANDADOS DESDE EL ARCHIVO JSON
     fetch('candados.json')
       .then(response => {
