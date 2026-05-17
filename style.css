@@ -1471,6 +1471,40 @@ body.light-mode .sidebar-overlay {
 .sidebar {
   z-index: 1002; /* Mayor que el botón ☰ */
 }
+/* Asegura que el contenedor de accesorios se adapte al móvil */
+#grid-accesorios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  padding: 10px;
+  width: 100%;
+}
+
+/* Ajustes individuales para la tarjeta en móviles */
+.producto-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Para que todas midan lo mismo */
+  background: #1a1a1a; /* O el color de fondo de tus tarjetas */
+  border-radius: 12px;
+  padding: 10px;
+}
+
+/* Forzar que los títulos no deformen la tarjeta */
+.producto-card h3 {
+  font-size: 0.9rem !important; /* Texto un poco más pequeño para que quepa en móvil */
+  line-height: 1.2;
+  margin: 8px 0 !important;
+}
+
+/* Asegurar que el botón de WhatsApp no se desborde */
+.producto-card a {
+  font-size: 0.8rem !important;
+  padding: 0.5rem 0.2rem !important;
+  text-align: center;
+  width: 100%;
+}
 
 
 
