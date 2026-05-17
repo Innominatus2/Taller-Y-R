@@ -1315,16 +1315,19 @@ let productosIndexados = [];
 
 // 1. FUNCIÓN PARA ESCANEAR TODOS LOS PRODUCTOS DE LA PÁGINA
 function escanearProductos() {
-    // Buscamos todas las tarjetas de la página (tanto estáticas como las del JSON)
     const tarjetas = document.querySelectorAll('.producto-card');
     productosIndexados = [];
 
     tarjetas.forEach(tarjeta => {
         const tituloElemento = tarjeta.querySelector('h3');
         if (tituloElemento) {
+            // Buscamos si esta tarjeta pertenece a alguna sección específica (ej: neumaticos, accesorios...)
+            const seccionPadre = tarjeta.closest('.seccion-contenido, section, .tab-content, #neumaticos, #accesorios, #candados, #servicios');
+            
             productosIndexados.push({
                 elemento: tarjeta,
-                texto: tituloElemento.textContent.toLowerCase().trim()
+                texto: tituloElemento.textContent.toLowerCase().trim(),
+                seccion: seccionPadre // Guardamos la sección a la que pertenece
             });
         }
     });
@@ -1332,18 +1335,52 @@ function escanearProductos() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // 2. CONFIGURAR EL INPUT DEL BUSCADOR GLOBAL
     const inputBuscador = document.getElementById('buscadorGlobal');
     
     if (inputBuscador) {
         inputBuscador.addEventListener('input', function(e) {
             const termino = e.target.value.toLowerCase().trim();
             
+            // Si el usuario borra la búsqueda, restauramos todo según la pestaña activa original
+            if (termino === "") {
+                productosIndexados.forEach(prod => {
+                    prod.elemento.style.display = ''; // Resetea la tarjeta
+                    if (prod.seccion) {
+                        // Forzar a que la sección recupere su comportamiento normal de pestañas
+                        prod.seccion.style.removeProperty('display'); 
+                    }
+                });
+                // Si tienes una función que renderiza las pestañas activas, la ejecutamos para no romper la vista
+                const tabActiva = document.querySelector('.tab.activo');
+                if (tabActiva) tabActiva.click(); 
+                return;
+            }
+
+            // SI EL USUARIO ESTÁ ESCRIBIENDO:
             productosIndexados.forEach(prod => {
                 if (prod.texto.includes(termino)) {
-                    prod.elemento.style.display = ''; // Muestra el producto si coincide
+                    prod.elemento.style.display = 'block'; // Forzar muestra de la tarjeta
+                    
+                    // ¡TRUCO MAGISTRAL!: Si el producto coincide, forzamos a que su sección padre SE MUESTRE 
+                    // aunque el usuario no esté en esa pestaña en este momento.
+                    if (prod.seccion) {
+                        prod.seccion.style.setProperty('display', 'block', 'important');
+                    }
                 } else {
-                    prod.elemento.style.display = 'none'; // Oculta si no coincide
+                    prod.elemento.style.display = 'none'; // Ocultar tarjeta si no coincide
+                }
+            });
+
+            // Opcional: Ocultar secciones dinámicas enteras si dentro de ellas no quedó ningún producto visible
+            const secciones = document.querySelectorAll('.seccion-contenido, section, .tab-content');
+            secciones.forEach(sec => {
+                if (termino !== "") {
+                    // Contamos cuántas tarjetas visibles quedan dentro de esta sección
+                    const visibles = sec.querySelectorAll('.producto-card[style*="display: block"], .producto-card:not([style*="display: none"])');
+                    if (visibles.length === 0 && !sec.contains(inputBuscador)) {
+                        // Si no hay productos que coincidan en esta sección, la ocultamos temporalmente
+                        sec.style.setProperty('display', 'none', 'important');
+                    }
                 }
             });
         });
@@ -1362,9 +1399,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const grid = document.getElementById('grid-neumaticos');
         if (!grid) return;
 
-        grid.innerHTML = ''; // Limpiar el contenedor de pruebas
+        grid.innerHTML = ''; // Limpiar contenedor
 
-        // Insertar los neumáticos dinámicamente con el diseño correcto
         neumaticos.forEach(n => {
           grid.innerHTML += `
             <div class="producto-card">
@@ -1377,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log(`✅ ¡Éxito! Se han cargado ${neumaticos.length} neumáticos dinámicos.`);
 
-        // RE-ESCANEAR: Ahora que los neumáticos ya están pintados en el HTML, los sumamos al buscador
+        // RE-ESCANEAR: Sumamos los 31 neumáticos recién creados al buscador global
         escanearProductos();
       })
       .catch(error => {
