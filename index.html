@@ -750,15 +750,20 @@ function cambiarAPestanaYScroll(categoria, productId) {
     modal.style.display = 'flex';
   });
 
-  // ===== COPIAR ENLACE =====
-  document.getElementById('btn-copiar').addEventListener('click', () => {
-    const enlace = 'https://innominatus2.github.io/Taller-Y-R/';
-    navigator.clipboard.writeText(enlace).then(() => {
-      const msg = document.getElementById('mensaje-copiado');
-      msg.textContent = '✅ Enlace copiado';
-      setTimeout(() => msg.textContent = '', 2000);
+// ===== COPIAR ENLACE =====
+const btnCopiar = document.getElementById('btn-copiar');
+if (btnCopiar) { // <-- Solo se ejecuta si el botón realmente existe en la pantalla
+    btnCopiar.addEventListener('click', () => {
+        const enlace = 'https://innominatus2.github.io/Taller-Y-R/';
+        navigator.clipboard.writeText(enlace).then(() => {
+            const msg = document.getElementById('mensaje-copiado');
+            if (msg) {
+                msg.textContent = '✅ Enlace copiado';
+                setTimeout(() => msg.textContent = '', 2000);
+            }
+        });
     });
-  });
+}
   
 </script>
 
