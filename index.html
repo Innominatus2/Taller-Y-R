@@ -1356,71 +1356,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 </script>
-
 <script>
-// ===== CARGAR NEUMÁTICOS (VERSIÓN DE PRUEBA) =====
-(function() {
-  console.log('🟢 Script de neumáticos iniciado');
-  
-  // Esperar a que el DOM esté listo
-  function cargarNeumaticos() {
-    const grid = document.getElementById('grid-neumaticos');
-    console.log('🔍 Buscando grid-neumaticos:', grid);
-    
-    if (!grid) {
-      console.error('❌ No se encontró el contenedor grid-neumaticos');
-      return;
-    }
-    
-    // Datos de prueba (3 neumáticos)
-    const neumaticos = [
-      {
-        img: "img/neumaticos/neumatico1.jpeg",
-        titulo: "Neumático Cityroad 10x3 - Negro - TUOVT",
-        link: "https://wa.me/34640846390?text=Hola%20me%20interesa%20neumatico%20Cityroad"
-      },
-      {
-        img: "img/neumaticos/neumatico2.jpeg", 
-        titulo: "Neumático Semitaco Tubeless 10x2.75 - Negro - SUNIIK",
-        link: "https://wa.me/34640846390?text=Hola%20me%20interesa%20neumatico%20Semitaco"
-      },
-      {
-        img: "img/neumaticos/neumatico3.jpeg",
-        titulo: "Neumático Cityroad Tubeless 60/70-6,5 - Gris - INNOVA",
-        link: "https://wa.me/34640846390?text=Hola%20me%20interesa%20neumatico%20Innova"
-      }
-    ];
-    
-    // Generar HTML
-    let html = '';
-    for (let i = 0; i < neumaticos.length; i++) {
-      const n = neumaticos[i];
-      html += `
-        <div class="producto-card">
-          <img src="${n.img}" alt="${n.titulo}" style="width:100%; border-radius:12px;">
-          <h3 style="margin:0.5rem 0;">${n.titulo}</h3>
-          <a href="${n.link}" target="_blank" style="display:inline-block; background:#00bfff; color:#000; padding:0.5rem 1rem; border-radius:20px; text-decoration:none;">Consultar →</a>
-        </div>
-      `;
-    }
-    
-    grid.innerHTML = html;
-    console.log(`✅ Cargados ${neumaticos.length} neumáticos en el grid`);
-    
-    // Verificar si se cargaron
-    const cards = document.querySelectorAll('#grid-neumaticos .producto-card');
-    console.log(`📊 Total tarjetas en grid: ${cards.length}`);
-  }
-  
-  // Ejecutar cuando el DOM esté listo
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', cargarNeumaticos);
-  } else {
-    cargarNeumaticos();
-  }
-})();
-</script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 1. Cargamos todos los neumáticos desde tu archivo JSON
+    fetch('neumaticos.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('No se pudo cargar el archivo de neumáticos');
+        }
+        return response.json();
+      })
+      .then(neumaticos => {
+        const grid = document.getElementById('grid-neumaticos');
+        if (!grid) return;
 
+        // Limpiamos el contenedor
+        grid.innerHTML = '';
+
+        // Recorremos TODOS los neumáticos del JSON y creamos sus tarjetas
+        neumaticos.forEach(n => {
+          grid.innerHTML += `
+            <div class="producto-card">
+              <img src="${n.img}" alt="${n.titulo}" style="width:100%; border-radius:12px;">
+              <h3 style="margin:0.5rem 0;">${n.titulo}</h3>
+              <a href="${n.link}" target="_blank" style="display:inline-block; background:#00bfff; color:#000; padding:0.5rem 1rem; border-radius:20px; text-decoration:none;">Consultar →</a>
+            </div>
+          `;
+        });
+
+        console.log(`✅ ¡Éxito! Se han cargado ${neumaticos.length} neumáticos.`);
+
+        // 2. Le avisamos al buscador que ya están listos los neumáticos en pantalla
+        if (typeof escanearProductos === 'function') {
+          escanearProductos();
+        }
+      })
+      .catch(error => {
+        console.error('Error al cargar los neumáticos:', error);
+      });
+  });
 </script>
 
 
