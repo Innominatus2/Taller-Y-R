@@ -6,7 +6,7 @@
   <title>Taller Y&R · Reparación profesional de patines</title>
   <link rel="icon" href="Y & R .jpeg" type="image/jpeg">
   <link rel="stylesheet" href="style.css">
-  <link rel="neumaticos" href="neumaticos.json">
+
  
 
 <!-- HEADER MEJORADO -->
@@ -70,15 +70,14 @@
 function escanearProductos() {
   const productos = [];
   
-  // Buscar en todos los contenedores de productos (tanto los ya cargados como los que se cargarán)
+  // Buscar en todos los contenedores de productos
   const selectores = [
-    '.producto-card',  // Para productos ya existentes
-    '#neumaticos-container .producto-card',
-    '#candados-container .producto-card', 
-    '#accesorios-container .producto-card'
+    '.producto-card',
+    '#grid-neumaticos .producto-card',
+    '#candados .producto-card', 
+    '#accesorios .producto-card'
   ];
   
-  // Unificar todos los selectores en una sola búsqueda
   const todasLasTarjetas = document.querySelectorAll(selectores.join(','));
   
   todasLasTarjetas.forEach((card, index) => {
@@ -87,23 +86,27 @@ function escanearProductos() {
     const link = card.querySelector('a')?.href;
     
     let categoria = 'desconocida';
-    let imgNum = '?';
+    let imgNum = index + 1;
     
     if (img && img.src) {
-      const matchNeumatico = img.src.match(/neumaticos?[\/\\]neumatico(\d+)\./i);
-      const matchCandado = img.src.match(/candados?[\/\\]candado(\d+)\./i);
-      const matchAccesorio = img.src.match(/accesorios?[\/\\]accesorio(\d+)\./i);
-      
-      if (matchNeumatico) {
+      if (img.src.includes('neumaticos')) {
         categoria = 'neumaticos';
-        imgNum = matchNeumatico[1];
-      } else if (matchCandado) {
+        const match = img.src.match(/neumatico(\d+)/i);
+        if (match) imgNum = match[1];
+      } else if (img.src.includes('candados')) {
         categoria = 'candados';
-        imgNum = matchCandado[1];
-      } else if (matchAccesorio) {
+        const match = img.src.match(/candado(\d+)/i);
+        if (match) imgNum = match[1];
+      } else if (img.src.includes('accesorios')) {
         categoria = 'accesorios';
-        imgNum = matchAccesorio[1];
+        const match = img.src.match(/accesorio(\d+)/i);
+        if (match) imgNum = match[1];
       }
+    }
+    
+    // Asignar ID único si no tiene
+    if (!card.id) {
+      card.id = `prod-${categoria}-${imgNum}-${index}`;
     }
     
     productos.push({
@@ -112,7 +115,7 @@ function escanearProductos() {
       categoria: categoria,
       numero: imgNum,
       card: card,
-      id: `prod-${categoria}-${imgNum}-${index}`
+      id: card.id
     });
   });
   
@@ -383,10 +386,13 @@ console.log(`📦 Buscador cargado: ${todosProductos.length} productos`);
     </div>
   </div>
 
+<!-- SOLO REEMPLAZA EL DIV DE NEUMÁTICOS con este: -->
 <div id="neumaticos" class="seccion">
   <div class="content-card">
     <h2 style="color:#00bfff; margin-bottom:1.5rem;">🔧 Neumáticos disponibles</h2>
-    <div class="productos-grid" id="grid-neumaticos"></div>
+    <div class="productos-grid" id="grid-neumaticos">
+      <!-- Aquí aparecerán los neumáticos -->
+    </div>
   </div>
 </div>
 
@@ -1298,7 +1304,120 @@ function abrirModalImagen(src) {
   }
 }
 
-</scripts>
+</script>
+
+<script>
+// ===== CARGAR NEUMÁTICOS DESDE JSON =====
+document.addEventListener('DOMContentLoaded', function() {
+  const gridNeumaticos = document.getElementById('grid-neumaticos');
+  
+  if (gridNeumaticos) {
+    // Cargar el archivo JSON
+    fetch('neumaticos.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('No se pudo cargar neumaticos.json');
+        }
+        return response.json();
+      })
+      .then(neumaticos => {
+        // Generar el HTML para cada neumático
+        gridNeumaticos.innerHTML = neumaticos.map(neumatico => `
+          <div class="producto-card" id="prod-neumaticos-${neumatico.titulo.replace(/[^a-zA-Z0-9]/g, '-')}">
+            <img src="${neumatico.img}" alt="${neumatico.titulo}" 
+                 onerror="this.src='https://via.placeholder.com/200x200?text=Imagen+no+disponible'">
+            <h3>${neumatico.titulo}</h3>
+            <a href="${neumatico.link}" target="_blank">Consultar →</a>
+          </div>
+        `).join('');
+        
+        console.log(`✅ Cargados ${neumaticos.length} neumáticos`);
+        
+        // 🔥 IMPORTANTE: Actualizar el buscador después de cargar los productos
+        // Re-ejecutar la función que escanea productos para el buscador
+        if (typeof escanearProductos === 'function') {
+          // Forzar re-escaneo
+          setTimeout(() => {
+            if (window.actualizarBuscador) window.actualizarBuscador();
+          }, 100);
+        }
+      })
+      .catch(error => {
+        console.error('Error cargando neumáticos:', error);
+        gridNeumaticos.innerHTML = '<p style="color:red;">⚠️ Error al cargar los neumáticos. Contacta con el administrador.</p>';
+      });
+  }
+});
+
+
+</script>
+
+<script>
+// ===== CARGAR NEUMÁTICOS (VERSIÓN DE PRUEBA) =====
+(function() {
+  console.log('🟢 Script de neumáticos iniciado');
+  
+  // Esperar a que el DOM esté listo
+  function cargarNeumaticos() {
+    const grid = document.getElementById('grid-neumaticos');
+    console.log('🔍 Buscando grid-neumaticos:', grid);
+    
+    if (!grid) {
+      console.error('❌ No se encontró el contenedor grid-neumaticos');
+      return;
+    }
+    
+    // Datos de prueba (3 neumáticos)
+    const neumaticos = [
+      {
+        img: "img/neumaticos/neumatico1.jpeg",
+        titulo: "Neumático Cityroad 10x3 - Negro - TUOVT",
+        link: "https://wa.me/34640846390?text=Hola%20me%20interesa%20neumatico%20Cityroad"
+      },
+      {
+        img: "img/neumaticos/neumatico2.jpeg", 
+        titulo: "Neumático Semitaco Tubeless 10x2.75 - Negro - SUNIIK",
+        link: "https://wa.me/34640846390?text=Hola%20me%20interesa%20neumatico%20Semitaco"
+      },
+      {
+        img: "img/neumaticos/neumatico3.jpeg",
+        titulo: "Neumático Cityroad Tubeless 60/70-6,5 - Gris - INNOVA",
+        link: "https://wa.me/34640846390?text=Hola%20me%20interesa%20neumatico%20Innova"
+      }
+    ];
+    
+    // Generar HTML
+    let html = '';
+    for (let i = 0; i < neumaticos.length; i++) {
+      const n = neumaticos[i];
+      html += `
+        <div class="producto-card">
+          <img src="${n.img}" alt="${n.titulo}" style="width:100%; border-radius:12px;">
+          <h3 style="margin:0.5rem 0;">${n.titulo}</h3>
+          <a href="${n.link}" target="_blank" style="display:inline-block; background:#00bfff; color:#000; padding:0.5rem 1rem; border-radius:20px; text-decoration:none;">Consultar →</a>
+        </div>
+      `;
+    }
+    
+    grid.innerHTML = html;
+    console.log(`✅ Cargados ${neumaticos.length} neumáticos en el grid`);
+    
+    // Verificar si se cargaron
+    const cards = document.querySelectorAll('#grid-neumaticos .producto-card');
+    console.log(`📊 Total tarjetas en grid: ${cards.length}`);
+  }
+  
+  // Ejecutar cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', cargarNeumaticos);
+  } else {
+    cargarNeumaticos();
+  }
+})();
+</script>
+
+</script>
+
 
 </body>
 </html>
