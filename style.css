@@ -1505,64 +1505,6 @@ body.light-mode .sidebar-overlay {
   text-align: center;
   width: 100%;
 }
-/* ===== BUSCADOR ===== */
-
-.buscador-container{
-  max-width:1300px;
-  margin:1rem auto 0;
-  padding:0 2rem;
-  position:relative;
-}
-
-.buscador-box{
-  background:#151515;
-  border:2px solid #00bfff;
-  border-radius:60px;
-
-  display:flex;
-  align-items:center;
-
-  padding:0.7rem 1.2rem;
-  gap:0.8rem;
-}
-
-.buscador-icono{
-  color:#00bfff;
-  font-size:1.2rem;
-  flex-shrink:0;
-}
-
-#buscadorGlobal{
-  width:100%;
-  background:transparent;
-  border:none;
-  outline:none;
-
-  color:white;
-  font-size:1rem;
-
-  min-width:0;
-}
-
-#buscadorGlobal::placeholder{
-  color:#777;
-}
-.buscador-box{
-  min-height:58px;
-}
-@media (max-width:600px){
-
-  .buscador-container{
-    padding:0 1rem;
-  }
-
-  .buscador-box{
-    min-height:50px;
-    padding:0.5rem 1rem;
-  }
-
-}
-
 
 
 

@@ -6,6 +6,7 @@
   <title>Taller Y&R · Reparación profesional de patines</title>
   <link rel="icon" href="Y & R .jpeg" type="image/jpeg">
   <link rel="stylesheet" href="style.css">
+  
 
  
 
@@ -59,199 +60,6 @@
   <div id="resultadosGlobal" class="resultados-container" style="position:absolute; top:100%; left:2rem; right:2rem; background:#1f1f1f; border-radius:20px; margin-top:0.5rem; max-height:400px; overflow-y:auto; display:none; z-index:1000; box-shadow:0 10px 30px rgba(0,0,0,0.5);"></div>
   
 </div>
-
-
-
-<!-- SCRIPT DEL BUSCADOR (una sola vez) -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const buscador = document.getElementById('buscadorGlobal');
-    const resultados = document.getElementById('resultadosGlobal');
-    
-    // Función para escanear TODOS los productos de la web
-    function escanearProductos() {
-      const productos = [];
-      
-      document.querySelectorAll('.producto-card').forEach((card, index) => {
-        const img = card.querySelector('img');
-        const nombre = card.querySelector('h3')?.textContent.trim() || 'Sin nombre';
-        const link = card.querySelector('a')?.href;
-        
-        let categoria = 'desconocida';
-        let imgNum = '?';
-        
-        if (img && img.src) {
-          const matchNeumatico = img.src.match(/neumaticos?[\/\\]neumatico(\d+)\./i);
-          const matchCandado = img.src.match(/candados?[\/\\]candado(\d+)\./i);
-          const matchAccesorio = img.src.match(/accesorios?[\/\\]accesorio(\d+)\./i);
-          
-          if (matchNeumatico) {
-            categoria = 'neumaticos';
-            imgNum = matchNeumatico[1];
-          } else if (matchCandado) {
-            categoria = 'candados';
-            imgNum = matchCandado[1];
-          } else if (matchAccesorio) {
-            categoria = 'accesorios';
-            imgNum = matchAccesorio[1];
-          }
-        }
-        
-        productos.push({
-          nombre: nombre,
-          link: link,
-          categoria: categoria,
-          numero: imgNum,
-          card: card,
-          id: `prod-${categoria}-${imgNum}-${index}`
-        });
-      });
-      
-      return productos;
-    }
-
-    const todosProductos = escanearProductos();
-    console.log(`📦 Buscador cargado: ${todosProductos.length} productos`);
-
-    // Función para obtener el color de hover según el tema
-    function getHoverColor() {
-      return document.body.classList.contains('light-mode') ? '#e2e8f0' : '#2a2a2a';
-    }
-    
-    function getBorderColor() {
-      return document.body.classList.contains('light-mode') ? '#e2e8f0' : '#333';
-    }
-
-        // EVENTO PRINCIPAL DE BÚSQUEDA
-    buscador.addEventListener('input', (e) => {
-      const texto = e.target.value.toLowerCase().trim();
-      
-      if (texto.length < 2) {
-        resultados.style.display = 'none';
-        return;
-      }
-
-      // Combinar productos y servicios en un solo array
-      const todosItems = [...todosProductos, ...todosServicios];
-
-      const filtrados = todosItems.filter(item => {
-        const nombreMatch = item.nombre.toLowerCase().includes(texto);
-        const numMatch = item.numero?.toString().includes(texto);
-        const categoriaMatch = item.categoria?.includes(texto);
-        const descripcionMatch = item.descripcion?.toLowerCase().includes(texto);
-        const precioMatch = item.precio?.toLowerCase().includes(texto);
-      
-        return nombreMatch || numMatch || categoriaMatch || descripcionMatch || precioMatch;
-      });
-
-      const borderColor = getBorderColor();
-      const hoverBgColor = document.body.classList.contains('light-mode') ? '#e2e8f0' : '#2a2a2a';
-
-      if (filtrados.length > 0) {
-        resultados.innerHTML = filtrados.map(item => {
-          const nombreResaltado = item.nombre.replace(
-            new RegExp(`(${texto})`, 'gi'),
-            '<span style="background:#00bfff20; color:#00bfff;">$1</span>'
-          );
-          
-          const icono = item.categoria === 'neumaticos' ? '🛞' : 
-                        item.categoria === 'candados' ? '🔒' : 
-                        item.categoria === 'accesorios' ? '⚡' : 
-                        item.categoria === 'servicios' ? '⚙️' : '📦';
-          
-          return `
-            <div style="padding:0.8rem 1rem; border-bottom:1px solid ${borderColor}; cursor:pointer; transition:0.2s;" 
-                 onclick="cambiarAPestanaYScroll('${item.categoria}', '${item.id}')"
-                 onmouseover="this.style.background='${hoverBgColor}'"
-                 onmouseout="this.style.background='transparent'">
-              <div style="display:flex; align-items:center; gap:1rem;">
-                <span style="color:#00bfff; font-size:1.2rem;">${icono}</span>
-                <div style="flex:1;">
-                  <div style="font-weight:500;">${nombreResaltado}</div>
-                  <div style="display:flex; gap:1rem; font-size:0.8rem; color:#888;">
-                    <span>📁 ${item.categoria}</span>
-                    <span>🔢 ${item.numero || '—'}</span>
-                  </div>
-                </div>
-                <span style="color:#00bfff; font-size:0.9rem;">Ver →</span>
-              </div>
-            </div>
-          `;
-        }).join('');
-        resultados.style.display = 'block';
-      } else {
-        resultados.innerHTML = `
-          <div style="padding:2rem; text-align:center;">
-            <div style="font-size:2rem; margin-bottom:0.5rem;">😕</div>
-            <div style="color:#888;">No encontramos "${texto}"</div>
-            <div style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Prueba con: pinchazo, batería, 7, tubeless...</div>
-          </div>
-        `;
-        resultados.style.display = 'block';
-      }
-    });
-
-    
-    // Escanear también servicios
-    function escanearServicios() {
-      const servicios = [];
-      document.querySelectorAll('.servicio-card').forEach((servicio, index) => {
-        const titulo = servicio.querySelector('h3')?.textContent.trim() || '';
-        const descripcion = servicio.querySelector('.servicio-descripcion')?.textContent.trim() || '';
-        const precio = servicio.querySelector('.servicio-precio')?.textContent.trim() || '';
-        
-        servicios.push({
-          nombre: titulo,
-          descripcion: descripcion,
-          precio: precio,
-          categoria: 'servicios',
-          numero: index + 1,
-          card: servicio,
-          id: `servicio-${index}`,
-          esServicio: true
-        });
-      });
-      return servicios;
-    }
-    
-    // Combinar productos y servicios
-    const todosServicios = escanearServicios();
-    console.log(`🔧 Buscador cargado: ${todosProductos.length} productos + ${todosServicios.length} servicios`);
-
-
-
-    // Escuchar cambios de tema para actualizar colores en resultados existentes
-    const themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) {
-      themeBtn.addEventListener('click', function() {
-        // Forzar actualización de resultados si están visibles
-        if (resultados.style.display === 'block' && buscador.value.length >= 2) {
-          const event = new Event('input');
-          buscador.dispatchEvent(event);
-        }
-      });
-    }
-
-    // Cerrar al hacer clic fuera
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.buscador-container')) {
-        resultados.style.display = 'none';
-      }
-    });
-
-    // Atajo de teclado: ESC para cerrar
-    buscador.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        resultados.style.display = 'none';
-        buscador.blur();
-      }
-    });
-    
-  });
-</script>
-
-
-
 
 
 
@@ -1251,71 +1059,36 @@ function abrirModalImagen(src) {
 
 </script>
 <script>
-let productosIndexados = [];
-
-// 1. FUNCIÓN PARA ESCANEAR TODOS LOS PRODUCTOS DE LA PÁGINA
-function escanearProductos() {
-    const tarjetas = document.querySelectorAll('.producto-card');
-    productosIndexados = [];
-
-    tarjetas.forEach(tarjeta => {
-        const tituloElemento = tarjeta.querySelector('h3');
-        if (tituloElemento) {
-            // Buscamos la sección real a la que pertenece la tarjeta en tu HTML
-            const seccionPadre = tarjeta.closest('.seccion');
-            
-            productosIndexados.push({
-                elemento: tarjeta,
-                texto: tituloElemento.textContent.toLowerCase().trim(),
-                seccion: seccionPadre 
-            });
-        }
-    });
-    console.log(`📊 Buscador actualizado: ${productosIndexados.length} productos indexados.`);
-}
-
 document.addEventListener('DOMContentLoaded', function() {
-    const inputBuscador = document.getElementById('buscadorGlobal');
     
-    if (inputBuscador) {
-        inputBuscador.addEventListener('input', function(e) {
-            const termino = e.target.value.toLowerCase().trim();
-            
-            // Si el usuario borra la búsqueda, restauramos todo según la pestaña activa original
-            if (termino === "") {
-                productosIndexados.forEach(prod => {
-                    prod.elemento.style.display = ''; // Resetea la tarjeta
-                });
-                // Ejecutamos el click en la pestaña activa para restaurar la vista normal de secciones
-                const tabActiva = document.querySelector('.tab.activo');
-                if (tabActiva) {
-                    const seccionId = tabActiva.dataset.seccion;
-                    cambiarSeccion(seccionId);
-                } 
-                return;
-            }
-
-            // SI EL USUARIO ESTÁ ESCRIBIENDO:
-            productosIndexados.forEach(prod => {
-                if (prod.texto.includes(termino)) {
-                    // Usamos '' para que herede el diseño Grid/Flex original de tu CSS
-                    prod.elemento.style.display = ''; 
-                    
-                    // Si el producto coincide, nos aseguramos de que su sección se vea
-                    if (prod.seccion) {
-                        prod.seccion.classList.add('activa');
-                    }
-                } else {
-                    prod.elemento.style.display = 'none'; // Ocultamos la tarjeta si no coincide
-                }
-            });
+    // Función auxiliar para activar el modal de ampliación en las imágenes nuevas
+    function activarModalEnTarjetas(contenedorId) {
+      const contenedor = document.getElementById(contenedorId);
+      if (!contenedor) return;
+      
+      contenedor.querySelectorAll('.producto-card img').forEach(img => {
+        // Evitamos duplicar eventos si ya se hubiera asignado
+        if (img.getAttribute('data-modal-listo')) return;
+        
+        img.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const modalImg = document.getElementById('modal-producto-img');
+          const modalProducto = document.getElementById('modal-producto');
+          if (modalImg && modalProducto) {
+            modalImg.src = img.src;
+            modalProducto.style.display = 'flex';
+          }
         });
+        
+        img.style.cursor = 'pointer';
+        img.style.transition = 'transform 0.2s';
+        img.addEventListener('mouseenter', () => img.style.transform = 'scale(1.02)');
+        img.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
+        img.setAttribute('data-modal-listo', 'true');
+      });
     }
 
-    // Escaneo inicial para los productos estáticos (como los de la sección servicios)
-    escanearProductos();
-
-    // 2. CARGAR LOS NEUMÁTICOS DESDE EL ARCHIVO JSON
+    // 1. CARGAR LOS NEUMÁTICOS DESDE EL ARCHIVO JSON
     fetch('neumaticos.json')
       .then(response => {
         if (!response.ok) throw new Error('No se pudo cargar el archivo de neumáticos');
@@ -1325,7 +1098,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const grid = document.getElementById('grid-neumaticos');
         if (!grid) return;
 
-        grid.innerHTML = ''; // Limpiar contenedor
+        grid.innerHTML = ''; 
 
         neumaticos.forEach(n => {
           grid.innerHTML += `
@@ -1338,13 +1111,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         console.log(`✅ ¡Éxito! Se han cargado ${neumaticos.length} neumáticos dinámicos.`);
-        escanearProductos(); // Actualizar el buscador con los nuevos neumáticos
+        
+        // Activamos interactividad visual en las nuevas imágenes
+        activarModalEnTarjetas('grid-neumaticos');
+        
+        if (typeof window.actualizarIndiceBuscador === 'function') {
+            window.actualizarIndiceBuscador();
+        }
       })
       .catch(error => {
         console.error('Error al cargar neumáticos:', error);
       });
 
-    // 3. CARGAR LOS CANDADOS DESDE EL ARCHIVO JSON
+    // 2. CARGAR LOS CANDADOS DESDE EL ARCHIVO JSON
     fetch('candados.json')
       .then(response => {
         if (!response.ok) throw new Error('No se pudo cargar el archivo de candados');
@@ -1367,11 +1146,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         console.log(`✅ ¡Éxito! Se han cargado ${candados.length} candados dinámicos.`);
-        escanearProductos(); // Actualizar el buscador con los nuevos candados
+        
+        // Activamos interactividad visual en las nuevas imágenes
+        activarModalEnTarjetas('grid-candados');
+        
+        if (typeof window.actualizarIndiceBuscador === 'function') {
+            window.actualizarIndiceBuscador();
+        }
       })
       .catch(error => console.error('Error al cargar candados:', error));
 
-    // 4. CARGAR LOS ACCESORIOS DESDE EL ARCHIVO JSON
+    // 3. CARGAR LOS ACCESORIOS DESDE EL ARCHIVO JSON
     fetch('accesorios.json')
       .then(response => {
         if (!response.ok) throw new Error('No se pudo cargar el archivo de accesorios');
@@ -1394,11 +1179,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         console.log(`✅ ¡Éxito! Se han cargado ${accesorios.length} accesorios.`);
-        escanearProductos(); // Actualizar el buscador con los nuevos accesorios
+        
+        // Activamos interactividad visual en las nuevas imágenes
+        activarModalEnTarjetas('grid-accesorios');
+        
+        if (typeof window.actualizarIndiceBuscador === 'function') {
+            window.actualizarIndiceBuscador();
+        }
       })
       .catch(error => console.error('Error al cargar accesorios:', error));
 });
 </script>
+
+<script src="buscador.js"></script>
 
 </body>
 </html>
