@@ -232,6 +232,11 @@
     body:not(.light-mode) .resultados-container {
       border: 1px solid #333 !important;
     }
+    .resultados-container {
+      background: rgba(31, 31, 31, 0.85) !important;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 191, 255, 0.3);
+    }
     
     /* Asegurar que los bordes internos también cambien */
     body.light-mode #resultadosGlobal > div > div {
@@ -1505,8 +1510,85 @@ body.light-mode .sidebar-overlay {
   text-align: center;
   width: 100%;
 }
+/* ========================================================
+   PERSONALIZACIÓN DEL SCROLLBAR PARA LA BARRA LATERAL (SIDEBAR)
+   ======================================================== */
 
+/* 1. Motores Webkit (Chrome, Safari, Edge, Opera) */
+.sidebar::-webkit-scrollbar {
+  width: 8px; /* Ancho de la barra de scroll vertical */
+}
 
+/* El fondo por donde se desliza la barra (Track) */
+.sidebar::-webkit-scrollbar-track {
+  background: #151515; /* Fondo oscuro a juego con tu buscador */
+  border-radius: 10px;
+}
+
+/* La barrita que arrastras (Thumb) */
+.sidebar::-webkit-scrollbar-thumb {
+  background: #00bfff; /* El azul eléctrico de tu temática */
+  border-radius: 10px;
+  border: 2px solid #151515; /* Crea un pequeño margen elegante */
+}
+
+/* Efecto cuando pasas el ratón por encima de la barrita */
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #008cc2; /* Un azul un poco más oscuro al hacer hover */
+}
+
+/* 2. Soporte para Firefox (usa un estándar diferente) */
+@supports (scrollbar-color: auto) {
+  .sidebar {
+    scrollbar-color: #00bfff #151515; /* color del tirador + color del fondo */
+    scrollbar-width: thin; /* Hace la barra más fina, ideal para móvil */
+  }
+}
+/* Adaptación del scroll para el Modo Claro */
+.light-mode .sidebar::-webkit-scrollbar-track {
+  background: #f0f0f0; 
+}
+
+.light-mode .sidebar::-webkit-scrollbar-thumb {
+  background: #00bfff; 
+  border: 2px solid #f0f0f0;
+}
+
+@supports (scrollbar-color: auto) {
+  .light-mode .sidebar {
+    scrollbar-color: #00bfff #f0f0f0;
+  }
+}
+.tab, .producto-card, .servicio-card, button, input {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efecto Hover flotante para tarjetas de productos/servicios */
+.producto-card:hover, .servicio-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0, 191, 255, 0.15); /* Brillo sutil del azul eléctrico de tu marca */
+}
+#formPresupuesto input:focus, #formPresupuesto select:focus, #formPresupuesto textarea:focus {
+  border-color: #00bfff !important;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.15);
+}
+/* Buscador global con efecto de súper iluminación azul */
+#buscadorGlobal:focus {
+  outline: none !important;
+  
+  /* 1. Hacemos el borde un poco más grueso y con opacidad total */
+  border: 2px solid #00bfff !important; 
+  
+  /* 2. Técnica de triple capa para un efecto neón intenso */
+  box-shadow: 
+    0 0 10px rgba(0, 191, 255, 0.9),   /* Capa 1: Brillo interno muy fuerte y concentrado */
+    0 0 25px rgba(0, 191, 255, 0.6),   /* Capa 2: Brillo medio que se expande */
+    0 0 45px rgba(0, 191, 255, 0.3);   /* Capa 3: Destello exterior suave y gigante */
+    
+  /* 3. Oscurecemos un punto más el fondo del input para generar un contraste brutal */
+  background-color: #080808 !important; 
+}
 
 
 
